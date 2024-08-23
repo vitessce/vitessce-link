@@ -1,0 +1,124 @@
+/* stylelint-disable docusaurus/copyright-header */
+
+/**
+ * CSS files with the .module.css suffix will be treated as CSS modules
+ * and scoped locally.
+ */
+
+.viewConfigEditorMain {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mainContainer {
+  width: 50%;
+  overflow: hidden;
+  padding: 2.5rem;
+}
+
+.containerRow {
+  margin-bottom: 1.25rem;
+}
+
+.dropzone {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0 0.5rem 0;
+  margin-left: 1.25rem;
+  box-sizing: border-box;
+  border-radius: 0;
+  border: 2px dashed var(--dropzone);
+  color: var(--dropzone);
+  cursor: pointer;
+  text-align: center;
+  box-shadow: -3px 3px 5px 5px rgba(0,0,0,.06);
+  width:100%;
+}
+
+.viewConfigErrorJS {
+  background-color: lightcoral;
+  border-radius: 0;
+}
+
+.studyInput {
+  padding: 0.5rem 1rem;
+  margin: 0.5rem 0 0.5rem 1.25rem;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.goButtonDiv {
+  padding: 0px 0px 0px 0px;
+  height: 50px;
+  width: 100%; 
+  display: flex; 
+  margin-top: 30px;
+  margin-left: 1.25rem;
+}
+
+.viewConfigGo {
+  border: 2px solid var(--vit-color-primary);
+  background-color: var(--vit-color-primary);
+  text-decoration: none !important;
+  text-transform: uppercase;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%; 
+  height: 100%;
+}
+
+.viewConfigGo:active {
+  box-shadow: none;
+  transform: scale(0.98);
+}
+
+.viewConfigInputUrlOrFileText {
+  margin-bottom: 0;
+  margin-left: 1.25rem;
+}
+
+.viewConfigUrlInput, .viewConfigUrlTextarea {
+  padding: 1rem 1rem;
+  font-size: 16px;
+  margin: 0.5rem 0 0.5rem 1.25rem;
+  border: 0;
+  box-shadow: -3px 3px 5px 5px rgba(0,0,0,.06);
+  outline: none;
+  color: var(--vit-input-foreground);
+  background-color: var(--vit-input-background);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.viewConfigUrlTextarea {
+  height: 200px;
+}
+
+.viewConfigUrlInput::placeholder, .viewConfigUrlTextarea::placeholder {
+  color: var(--dropzone);
+  opacity: 1;
+}
+
+.requiredField {
+  color: rgb(189, 44, 44);
+}
+
+.tryResetButtons {
+  padding: 2px 5px;
+  margin-left: 10px;
+  border-radius: 8px;
+  border: 2px solid var(--dropzone);
+}
+
+.tryResetButtons:hover{
+  cursor: pointer;
+  background-color: var(--dropzone);
+  color: var(--vit-input-foreground);
+}
