@@ -1,4 +1,3 @@
-
 export const baseJson = `{
   "version": "1.0.15",
   "name": "My config",
@@ -8,7 +7,6 @@ export const baseJson = `{
   "layout": [],
   "initStrategy": "auto"
 }`;
-
 
 export const exampleJson = `{
   "version": "1.0.15",
