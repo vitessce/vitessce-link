@@ -242,7 +242,7 @@ export default function ViewConfigEditor(props) {
 							)}
 						</div>
 					</div>
-					<div className={styles.goButtonDiv}>
+					<div className={styles.viewConfigGoDiv}>
 						<button
 							type="button"
 							className={styles.viewConfigGo}
