@@ -2,8 +2,8 @@
 /* eslint-disable no-console */
 import React, { useState, useEffect } from "react";
 import { QueryParamProvider } from "use-query-params";
-import ConfigEditor from "../components/ConfigEditor.js";
-import { baseJson } from "../utils/config-examples.js";
+import { ConfigEditor } from "./../components/ConfigEditor";
+import { baseJson } from "./../utils/config-examples.js";
 import { useHashParam, useSetHashParams } from "../utils/use-hash-param.js";
 
 function IndexWithHashParams() {
@@ -85,8 +85,8 @@ function IndexWithHashParams() {
 	}
 	console.log("config output", validConfig);
 
-	return edit ? (
-		<>
+	if (edit) {
+		return (
 			<ConfigEditor
 				pendingJson={pendingJson}
 				setPendingJson={setPendingJson}
@@ -97,17 +97,23 @@ function IndexWithHashParams() {
 				setUrl={setUrlFromEditor}
 				setStudyIdInput={setStudyIdInput}
 			/>
-		</>
-	) : validConfig ? (
-		// to remove this and add Eric's Vitessce component here
-		<div>
-			<p>Vitessce Placeholder</p>
-		</div>
-	) : !loading ? (
-		<p>Error in configuration</p>
-	) : (
-		<p>Loading...</p>
-	);
+		);
+	}
+
+	if (validConfig) {
+		// TODO: Remove this and add Eric's Vitessce component
+		return (
+			<div>
+				<p>Vitessce Placeholder</p>
+			</div>
+		);
+	}
+
+	if (loading) {
+		return <p>Loading...</p>;
+	}
+
+	return <p>Error in configuration</p>;
 }
 
 export default function Home() {

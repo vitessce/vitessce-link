@@ -2,35 +2,33 @@
 import React, { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-import { generateConfig, getHintOptions } from "@vitessce/config";
+import { generateConfig, getHintOptions } from "vitessce";
 
 // import LoadingOverlay from '../components/loadingOverlay.js';
 
-import StudyIdInput from "./StudyIdInput.js";
-import { baseJson } from "../utils/config-examples.js";
-import ErrorDiv from "./ErrorDiv.js";
+import { StudyIdInput } from "../StudyIdInput";
+import { baseJson } from "../../utils/config-examples.js";
+import { ErrorDiv } from "../ErrorDiv";
 
-import styles from "./configEditor.module.css";
+import styles from "./ConfigEditor.module.css";
 
 import {
 	STUDY_ID_LENGTH,
 	NO_DATASET_URL_ERROR,
 	exampleURL,
 	INCORRECT_URL_ERROR,
-} from "../utils/constants.js";
-import { validateConfig, sanitiseURLs } from "../utils/utility-functions.js";
+} from "../../utils/constants.js";
+import { validateConfig, sanitiseURLs } from "../../utils/utility-functions.js";
 
-export default function ViewConfigEditor(props) {
-	const {
-		pendingJson,
-		setPendingJson,
-		error,
-		setError,
-		// loading,
-		setUrl,
-		setStudyIdInput,
-	} = props;
-
+export const ConfigEditor = ({
+	pendingJson,
+	setPendingJson,
+	error,
+	setError,
+	// loading,
+	setUrl,
+	setStudyIdInput,
+}) => {
 	const [pendingUrl, setPendingUrl] = useState("");
 	const [datasetUrls, setDatasetUrls] = useState("");
 	const [pendingFileContents, setPendingFileContents] = useState(null);
@@ -40,18 +38,12 @@ export default function ViewConfigEditor(props) {
 	const [showReset, setShowReset] = useState(null);
 	const [loadFrom, setLoadFrom] = useState("editor");
 
-	function handleValidateStudyId(inputStudyId){
-		if (inputStudyId === '') {
-			setError('Study ID cannot be empty');
-		  } else if (!/^\d+$/.test(inputStudyId)) {
-			setError('Study ID must be numbers only');
-		  } else if (inputStudyId.length < STUDY_ID_LENGTH || inputStudyId.length > STUDY_ID_LENGTH) {
-			setError(`Study ID must be ${STUDY_ID_LENGTH} digits`);
-		  } else {
-			setStudyId(inputStudyId);
-			setError(null);
-		  }
-		
+	function handleSetStudyId(id) {
+		setStudyId(id);
+	}
+
+	function handleInputError(errMessage) {
+		setError(errMessage);
 	}
 
 	const onDrop = useCallback(
@@ -175,14 +167,11 @@ export default function ViewConfigEditor(props) {
 		<main className={styles.viewConfigEditorMain}>
 			<div className={styles.mainContainer}>
 				<div>
-					{error ? (
-						<ErrorDiv errorMessage={error} />
-					) : generateConfigError ? (
-						<ErrorDiv errorMessage={generateConfigError} />
-					) : null}
+					<ErrorDiv errorMessage={error ?? generateConfigError} />
 					<div className={styles.containerRow}>
 						<StudyIdInput
-							onValidateStudyId={handleValidateStudyId}
+							onInputError={handleInputError}
+							onInputChange={handleSetStudyId}
 						/>
 					</div>
 					<div className={styles.containerRow}>
@@ -255,4 +244,4 @@ export default function ViewConfigEditor(props) {
 			</div>
 		</main>
 	);
-}
+};

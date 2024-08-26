@@ -1,11 +1,12 @@
 import styles from "./errorDiv.module.css";
 
-const ErrorDiv = ({ errorMessage }) => {
+export const ErrorDiv = ({ errorMessage }) => {
+	if (!errorMessage) {
+		return null;
+	}
 	return (
 		<div className={styles.vitessceAppLoadError}>
 			<pre>{errorMessage}</pre>
 		</div>
 	);
 };
-
-export default ErrorDiv;

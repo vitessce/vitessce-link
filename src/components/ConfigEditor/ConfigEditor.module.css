@@ -100,7 +100,8 @@
   opacity: 1;
 }
 
-.requiredField {
+.requiredField:after { 
+  content:" *"; 
   color: rgb(189, 44, 44);
 }
 

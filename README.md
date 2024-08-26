@@ -2,10 +2,10 @@
     Vitessce-Link provides an interface to experience [Vitessce](https://github.com/vitessce/vitessce/) with mixed reality.  
 
 ### Local development
-cd into the the project directory
+`Install  [pnpm](https://pnpm.io/installation)` and `cd` into the the project directory
 ```
-    npm install
-    npm start
+    pnpm install
+    pnpm run dev
 
 ```
 
