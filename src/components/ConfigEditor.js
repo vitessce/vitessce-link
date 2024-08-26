@@ -16,6 +16,7 @@ import {
 	STUDY_ID_LENGTH,
 	NO_DATASET_URL_ERROR,
 	exampleURL,
+	INCORRECT_URL_ERROR,
 } from "../utils/constants.js";
 import { validateConfig, sanitiseURLs } from "../utils/utility-functions.js";
 
@@ -39,12 +40,18 @@ export default function ViewConfigEditor(props) {
 	const [showReset, setShowReset] = useState(null);
 	const [loadFrom, setLoadFrom] = useState("editor");
 
-	function handleSetStudyId(id) {
-		setStudyId(id);
-	}
-
-	function handleInputError(errMessage) {
-		setError(errMessage);
+	function handleValidateStudyId(inputStudyId){
+		if (inputStudyId === '') {
+			setError('Study ID cannot be empty');
+		  } else if (!/^\d+$/.test(inputStudyId)) {
+			setError('Study ID must be numbers only');
+		  } else if (inputStudyId.length < STUDY_ID_LENGTH || inputStudyId.length > STUDY_ID_LENGTH) {
+			setError(`Study ID must be ${STUDY_ID_LENGTH} digits`);
+		  } else {
+			setStudyId(inputStudyId);
+			setError(null);
+		  }
+		
 	}
 
 	const onDrop = useCallback(
@@ -127,7 +134,7 @@ export default function ViewConfigEditor(props) {
 		const sanitisedUrls = sanitiseURLs(event.target.value);
 		if (sanitisedUrls.length === 0) {
 			if (datasetUrls === "") {
-				setError("Enter a correct URL");
+				setError(INCORRECT_URL_ERROR);
 			} else {
 				setError(null);
 				setLoadFrom("editor");
@@ -140,11 +147,11 @@ export default function ViewConfigEditor(props) {
 		setInputURL(newDatasetUrls);
 		const sanitisedUrls = sanitiseURLs(newDatasetUrls);
 		if (sanitisedUrls.length === 0) {
-			setError("Incorrect URL");
+			setError(INCORRECT_URL_ERROR);
 			return;
 		}
 		try {
-			// This errors if file type is incorrect
+			// This gives an error if file type is incorrect - so keeping it
 			getHintOptions(sanitisedUrls);
 			setGenerateConfigError(null);
 			setPendingJson(baseJson);
@@ -175,8 +182,7 @@ export default function ViewConfigEditor(props) {
 					) : null}
 					<div className={styles.containerRow}>
 						<StudyIdInput
-							onInputError={handleInputError}
-							onInputChange={handleSetStudyId}
+							onValidateStudyId={handleValidateStudyId}
 						/>
 					</div>
 					<div className={styles.containerRow}>
