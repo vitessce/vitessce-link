@@ -110,8 +110,6 @@ export const ConfigEditor = ({
 		setError(null);
 		try {
 			const configJson = await generateConfig(sanitisedUrls, "Basic");
-			console.log(configJson.layout)
-			
 			setPendingJson(() => JSON.stringify(configJson, null, 2));
 			setLoadFrom("editor");
 		} catch (e) {
