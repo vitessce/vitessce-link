@@ -1,125 +1,97 @@
-/* eslint-disable no-nested-ternary */
-/* eslint-disable no-console */
-import React, { useState, useEffect } from "react";
-import { QueryParamProvider } from "use-query-params";
-import { ConfigEditor } from "./../components/ConfigEditor";
-import { baseJson } from "./../utils/config-examples.js";
+import useSWR from 'swr';
+import { useState, useEffect } from 'react';
 import { useHashParam, useSetHashParams } from "../utils/use-hash-param.js";
+import { baseJson } from "../utils/config-examples.js";
+import { ConfigEditor } from "./../components/ConfigEditor";
+import { QueryParamProvider } from "use-query-params";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
 function IndexWithHashParams() {
-	const setHashParams = useSetHashParams();
-	const [url] = useHashParam("url", undefined, "string");
-	const [edit] = useHashParam("edit", false, "boolean");
-	const [error, setError] = useState(null);
-	const [loading, setLoading] = useState(true);
-	const [validConfig, setValidConfig] = useState(null);
+    const setHashParams = useSetHashParams();
+    const [url] = useHashParam('url', undefined, 'string');
+    const [edit] = useHashParam('edit', false, 'boolean');
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [validConfig, setValidConfig] = useState(null);
+    const [pendingJson, setPendingJson] = useState(baseJson);
+    const [studyIdInput, setStudyIdInput] = useState(null);
 
-	const [pendingJson, setPendingJson] = useState(baseJson);
-	const [studyIdInput, setStudyIdInput] = useState(null);
+    const { isValidating } = useSWR(url, fetcher, {
+    
+        onError: (err) => {
+                setError({
+                    title: 'Fetch error',
+                    message: err.message,
+                });
+        },
+        onSuccess: (data) => {
+            if (data) {
+                data.studyId = studyIdInput;
+                const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data))}`
+                setUrlFromEditor(nextUrl)
+                setValidConfig(data);
+            }
+            setLoading(false);
+        },
+    });
 
-	function clearConfigs() {
-		setValidConfig(null);
-		setPendingJson(baseJson);
-	}
+    useEffect(() => {
+        console.log("useEffect", url)
+        if(url){
+            setLoading(true)
+            setUrlFromEditor
+        }
+        else {
+            setError(null);
+            setLoading(false);
+            setValidConfig(null);
+            setPendingJson(baseJson);
+        }
+    }, [edit, url, setError, studyIdInput]);
 
-	useEffect(() => {
-		let unmounted = false;
-		async function processParams() {
-			if (url) {
-				setLoading(true);
-				try {
-					const response = await fetch(url);
-					if (unmounted) {
-						return;
-					}
-					if (response.ok) {
-						const responseText = await response.text();
-						if (unmounted) {
-							return;
-						}
-						try {
-							const responseJson = JSON.parse(responseText);
-							responseJson.studyId = studyIdInput;
-							setValidConfig(responseJson);
-						} catch (e) {
-							setError({
-								title: "Error parsing JSON",
-								message: "Error executing JSON.parse",
-							});
-						}
-						setLoading(false);
-					} else {
-						setError({
-							title: "Fetch response not OK",
-							message: response.statusText,
-						});
-						setLoading(false);
-						clearConfigs();
-					}
-				} catch (e) {
-					setError({
-						title: "Fetch error",
-						message: e.message,
-					});
-					setLoading(false);
-					clearConfigs();
-				}
-			} else {
-				setError(null);
-				setLoading(false);
-				clearConfigs();
-			}
-		}
-		processParams();
-		return () => {
-			unmounted = true;
-		};
-	}, [edit, url, setError, studyIdInput]);
+    function setUrlFromEditor(nextUrl) {
+        setHashParams({
+            dataset: undefined,
+            url: nextUrl,
+            edit: false,
+        });
+    }
 
-	function setUrlFromEditor(nextUrl) {
-		setHashParams({
-			dataset: undefined,
-			url: nextUrl,
-			edit: false,
-		});
-	}
-	console.log("config output", validConfig);
+    if (edit) {
+        return (
+            <ConfigEditor
+                pendingJson={pendingJson}
+                setPendingJson={setPendingJson}
+                error={error}
+                setError={setError}
+                loading={loading}
+                setLoading={setLoading}
+                setUrl={setUrlFromEditor}
+                setStudyIdInput={setStudyIdInput}
+            />
+        );
+    }
 
-	if (edit) {
-		return (
-			<ConfigEditor
-				pendingJson={pendingJson}
-				setPendingJson={setPendingJson}
-				error={error}
-				setError={setError}
-				loading={loading}
-				setLoading={setLoading}
-				setUrl={setUrlFromEditor}
-				setStudyIdInput={setStudyIdInput}
-			/>
-		);
-	}
+    if (validConfig) {
+        return (
+            <div>
+                <p>Vitessce Placeholder</p>
+            </div>
+        );
+    }
 
-	if (validConfig) {
-		// TODO: Remove this and add Eric's Vitessce component
-		return (
-			<div>
-				<p>Vitessce Placeholder</p>
-			</div>
-		);
-	}
+    if (loading || isValidating) {
+        return <p>Loading...</p>;
+    }
 
-	if (loading) {
-		return <p>Loading...</p>;
-	}
-
-	return <p>Error in configuration</p>;
+    return <p>Error in configuration</p>;
 }
 
 export default function Home() {
-	return (
-		<QueryParamProvider>
-			<IndexWithHashParams />
-		</QueryParamProvider>
-	);
+    return (
+        <QueryParamProvider>
+            <IndexWithHashParams />
+        </QueryParamProvider>
+    );
 }
