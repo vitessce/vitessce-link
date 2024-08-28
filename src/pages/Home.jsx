@@ -4,8 +4,8 @@ import { useHashParam, useSetHashParams } from "../utils/use-hash-param.js";
 import { baseJson } from "../utils/config-examples.js";
 import { ConfigEditor } from "./../components/ConfigEditor";
 import { QueryParamProvider } from "use-query-params";
-
-const fetcher = (url) => fetch(url).then((res) => res.json());
+import {fetcher} from './../utils/utility-functions.js';
+import {LoadingOverlay} from './../components/loadingOverlay';
 
 function IndexWithHashParams() {
 	const setHashParams = useSetHashParams();
@@ -15,19 +15,19 @@ function IndexWithHashParams() {
 	const [loading, setLoading] = useState(true);
 	const [validConfig, setValidConfig] = useState(null);
 	const [pendingJson, setPendingJson] = useState(baseJson);
-	const [studyIdInput, setStudyIdInput] = useState(null);
+	const [linkId, setLinkId] = useState(null);
 
 	const { isValidating } = useSWR(url, fetcher, {
 		onError: (err) => {
-			setError({
-				title: "Fetch error",
-				message: err.message,
-			});
+			console.log(err, "test")
+			setError(err.message);
 			setLoading(false);
 		},
 		onSuccess: (data) => {
 			if (data) {
-				data.studyId = studyIdInput;
+				//TODO:  Need to add it in the linkController component
+				data.linkID = linkId;
+				console.log(linkId, data.linkID)
 				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
 				setUrlFromEditor(nextUrl);
 				setValidConfig(data);
@@ -46,7 +46,7 @@ function IndexWithHashParams() {
 			setValidConfig(null);
 			setPendingJson(baseJson);
 		}
-	}, [edit, url, setError, studyIdInput]);
+	}, [edit, url, setError, linkId]);
 
 	function setUrlFromEditor(nextUrl) {
 		setHashParams({
@@ -63,10 +63,9 @@ function IndexWithHashParams() {
 				setPendingJson={setPendingJson}
 				error={error}
 				setError={setError}
-				loading={loading}
 				setLoading={setLoading}
 				setUrl={setUrlFromEditor}
-				setStudyIdInput={setStudyIdInput}
+				setLinkIdInput={setLinkId}
 			/>
 		);
 	}
@@ -80,7 +79,7 @@ function IndexWithHashParams() {
 	}
 
 	if (loading || isValidating) {
-		return <p>Loading...</p>;
+		return <LoadingOverlay />
 	}
 
 	return <p>Error in configuration</p>;

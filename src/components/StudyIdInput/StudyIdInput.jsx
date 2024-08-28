@@ -5,16 +5,16 @@ import { STUDY_ID_LENGTH } from "../../utils/constants.js";
 export const StudyIdInput = ({ onInputError, onInputChange }) => {
 	const handleInputChange = (e) => {
 		const { value } = e.target;
-		console.log(e.target.value.trim(), value.length);
 		if (value.trim()?.length === STUDY_ID_LENGTH) {
 			if (!/^\d+$/.test(value)) {
 				onInputError("Study ID must be numbers only");
-			} else onInputError(null);
+			} else {
+				onInputChange(value);
+				onInputError(null);
+			}
 		} else {
 			onInputError(`Study ID must be ${STUDY_ID_LENGTH} digits`);
 		}
-
-		onInputChange(value);
 	};
 
 	return (

@@ -1,10 +1,8 @@
 /* eslint-disable no-nested-ternary */
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-
+import useSWR from 'swr';
 import { generateConfig, getHintOptions } from "vitessce";
-
-// import LoadingOverlay from '../components/loadingOverlay.js';
 
 import { StudyIdInput } from "../StudyIdInput";
 import { baseJson } from "../../utils/config-examples.js";
@@ -13,21 +11,22 @@ import { ErrorDiv } from "../ErrorDiv";
 import styles from "./ConfigEditor.module.css";
 
 import {
-	STUDY_ID_LENGTH,
-	NO_DATASET_URL_ERROR,
-	exampleURL,
-	INCORRECT_URL_ERROR,
+	ERROR_MESSAGES,
+	EXAMPLE_URL,
+	LINK_ID_ENDPOINT_URL,
+	LINK_ID_LENGTH,
+	LINK_ID_KEY,
 } from "../../utils/constants.js";
-import { validateConfig, sanitiseURLs } from "../../utils/utility-functions.js";
+import { validateConfig, sanitizeURLs, studyIdFetcher} from "../../utils/utility-functions.js";
 
 export const ConfigEditor = ({
 	pendingJson,
 	setPendingJson,
 	error,
 	setError,
-	// loading,
+	setLoading,
 	setUrl,
-	setStudyIdInput,
+	setLinkIdInput,
 }) => {
 	const [pendingUrl, setPendingUrl] = useState("");
 	const [datasetUrls, setDatasetUrls] = useState("");
@@ -35,12 +34,36 @@ export const ConfigEditor = ({
 	const [generateConfigError, setGenerateConfigError] = useState(null);
 	const [inputURL, setInputURL] = useState("");
 	const [studyId, setStudyId] = useState(null);
+	const [linkId, setLinkId] = useState(null);
+	const [linkIdUrl, setLinkIdUrl] = useState(null);
 	const [showReset, setShowReset] = useState(null);
 	const [loadFrom, setLoadFrom] = useState("editor");
 
-	function handleSetStudyId(id) {
-		setStudyId(id);
+	function handleGetLinkId(studyId) {
+		setStudyId(studyId)
 	}
+
+	useSWR(linkIdUrl, studyIdFetcher, {
+		onError: (err) => {
+			setError(err.message);
+			setLoading(false);
+		},
+		onSuccess: (data) => {
+			console.log(data, data[LINK_ID_KEY])
+			if (data && data[LINK_ID_KEY]) {
+				setLinkId(data[LINK_ID_KEY]);
+			}
+			setLoading(false);
+		},
+		shouldRetryOnError: false,
+	});	
+
+	useEffect(() => {
+		if (studyId) {
+			const constructedUrl = `${LINK_ID_ENDPOINT_URL}${studyId}`;
+			setLinkIdUrl(constructedUrl);
+		}
+	}, [studyId]); 
 
 	function handleInputError(errMessage) {
 		setError(errMessage);
@@ -72,12 +95,12 @@ export const ConfigEditor = ({
 			(loadFrom === "url" && inputURL === "") ||
 			(loadFrom === "editor" && datasetUrls === "")
 		) {
-			setError(NO_DATASET_URL_ERROR);
+			setError(ERROR_MESSAGES.NO_DATASET_URL_ERROR);
 			return;
 		}
 		if (error) return;
 
-		if (studyId && studyId !== "" && studyId.length === STUDY_ID_LENGTH) {
+		if (linkId && linkId !== "" && linkId.length === LINK_ID_LENGTH) {
 			let nextUrl;
 			if (loadFrom === "editor") {
 				const nextConfig = pendingJson;
@@ -93,23 +116,23 @@ export const ConfigEditor = ({
 				nextUrl = `data:,${encodeURIComponent(pendingFileContents)}`;
 			}
 			setUrl(nextUrl);
-			setStudyIdInput(studyId);
+			setLinkIdInput(linkId);
 		} else {
-			setError("Enter a valid Study Id");
+			setError(ERROR_MESSAGES.INVALID_STUDY_ID);
 		}
 	}
 
 	async function handleConfigGeneration() {
-		setDatasetUrls(exampleURL);
+		setDatasetUrls(EXAMPLE_URL);
 		setShowReset(true);
-		const sanitisedUrls = sanitiseURLs(exampleURL);
-		if (sanitisedUrls.length === 0) {
+		const sanitizedUrls = sanitizeURLs(EXAMPLE_URL);
+		if (sanitizedUrls.length === 0) {
 			return;
 		}
 		setGenerateConfigError(null);
 		setError(null);
 		try {
-			const configJson = await generateConfig(sanitisedUrls, "Basic");
+			const configJson = await generateConfig(sanitizedUrls, "Basic");
 			setPendingJson(() => JSON.stringify(configJson, null, 2));
 			setLoadFrom("editor");
 		} catch (e) {
@@ -123,10 +146,10 @@ export const ConfigEditor = ({
 		setPendingUrl(url);
 		setLoadFrom("url");
 		setInputURL(url);
-		const sanitisedUrls = sanitiseURLs(event.target.value);
-		if (sanitisedUrls.length === 0) {
+		const sanitizedUrls = sanitizeURLs(event.target.value);
+		if (sanitizedUrls.length === 0) {
 			if (datasetUrls === "") {
-				setError(INCORRECT_URL_ERROR);
+				setError(ERROR_MESSAGES.INCORRECT_URL_ERROR);
 			} else {
 				setError(null);
 				setLoadFrom("editor");
@@ -137,14 +160,14 @@ export const ConfigEditor = ({
 	function handleTextAreaURLChange(newDatasetUrls) {
 		setDatasetUrls(newDatasetUrls);
 		setInputURL(newDatasetUrls);
-		const sanitisedUrls = sanitiseURLs(newDatasetUrls);
-		if (sanitisedUrls.length === 0) {
-			setError(INCORRECT_URL_ERROR);
+		const sanitizedUrls = sanitizeURLs(newDatasetUrls);
+		if (sanitizedUrls.length === 0) {
+			setError(ERROR_MESSAGES.INCORRECT_URL_ERROR);
 			return;
 		}
 		try {
 			// This gives an error if file type is incorrect - so keeping it
-			getHintOptions(sanitisedUrls);
+			getHintOptions(sanitizedUrls);
 			setGenerateConfigError(null);
 			setPendingJson(baseJson);
 		} catch (e) {
@@ -156,8 +179,8 @@ export const ConfigEditor = ({
 		setPendingJson(baseJson);
 		setDatasetUrls("");
 		if (inputURL === "" && datasetUrls === "") {
-			setError(NO_DATASET_URL_ERROR);
-		} else if (inputURL !== "" && sanitiseURLs(inputURL)?.length > 0) {
+			setError(ERROR_MESSAGES.NO_DATASET_URL_ERROR);
+		} else if (inputURL !== "" && sanitizeURLs(inputURL)?.length > 0) {
 			setLoadFrom("url");
 		}
 		setShowReset(false);
@@ -171,7 +194,7 @@ export const ConfigEditor = ({
 					<div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}
-							onInputChange={handleSetStudyId}
+							onInputChange={handleGetLinkId}
 						/>
 					</div>
 					<div className={styles.containerRow}>

@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./loadingOverlay.module.css";
 
-export default function LoadingOverlay({ isLoading }) {
+export const LoadingOverlay = ({ isLoading }) => {
 	if (!isLoading) return null;
 
 	return (
