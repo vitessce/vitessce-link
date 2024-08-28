@@ -6,11 +6,11 @@ export const Navbar = () => {
 		<nav className={styles.navbarSticky}>
 			<div className={styles.navbar}>
 				<div className={styles.navbarItems}>
-					<Link to="/#?edit=true" className={styles.navbarLogo}>
+					<Link to="/" className={styles.navbarLogo}>
 						<div className={styles.logoImageDiv}>
 							<img src="/logo-v.png" alt="Logo" />
 						</div>
-						<b className={styles.navbarTitle}>VitessceLink</b>
+						<b className={styles.navbarTitle}>Vitessce-Link</b>
 					</Link>
 				</div>
 			</div>

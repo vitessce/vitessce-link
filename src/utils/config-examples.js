@@ -10,7 +10,7 @@ export const baseJson = `{
 
 export const exampleConfig = {
 	version: "1.0.15",
-	name: "VitessceLink Demo",
+	name: "Vitessce-Link Demo",
 	description: "Test",
 	datasets: [
 		{
