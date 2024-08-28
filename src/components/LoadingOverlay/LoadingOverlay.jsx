@@ -9,4 +9,4 @@ export const LoadingOverlay = ({ isLoading }) => {
 			<div className={styles.spinner} />
 		</div>
 	);
-}
+};

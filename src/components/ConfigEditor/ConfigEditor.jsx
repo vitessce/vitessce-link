@@ -1,11 +1,11 @@
 /* eslint-disable no-nested-ternary */
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
-import useSWR from 'swr';
+import useSWR from "swr";
 import { generateConfig, getHintOptions } from "vitessce";
 
 import { StudyIdInput } from "../StudyIdInput";
-import { baseJson } from "../../utils/config-examples.js";
+import { baseJson, exampleConfig } from "../../utils/config-examples.js";
 import { ErrorDiv } from "../ErrorDiv";
 
 import styles from "./ConfigEditor.module.css";
@@ -17,7 +17,11 @@ import {
 	LINK_ID_LENGTH,
 	LINK_ID_KEY,
 } from "../../utils/constants.js";
-import { validateConfig, sanitizeURLs, studyIdFetcher} from "../../utils/utility-functions.js";
+import {
+	validateConfig,
+	sanitizeURLs,
+	studyIdFetcher,
+} from "../../utils/utility-functions.js";
 
 export const ConfigEditor = ({
 	pendingJson,
@@ -40,7 +44,7 @@ export const ConfigEditor = ({
 	const [loadFrom, setLoadFrom] = useState("editor");
 
 	function handleGetLinkId(studyId) {
-		setStudyId(studyId)
+		setStudyId(studyId);
 	}
 
 	useSWR(linkIdUrl, studyIdFetcher, {
@@ -49,21 +53,21 @@ export const ConfigEditor = ({
 			setLoading(false);
 		},
 		onSuccess: (data) => {
-			console.log(data, data[LINK_ID_KEY])
+			console.log(data, data[LINK_ID_KEY]);
 			if (data && data[LINK_ID_KEY]) {
 				setLinkId(data[LINK_ID_KEY]);
 			}
 			setLoading(false);
 		},
 		shouldRetryOnError: false,
-	});	
+	});
 
 	useEffect(() => {
 		if (studyId) {
 			const constructedUrl = `${LINK_ID_ENDPOINT_URL}${studyId}`;
 			setLinkIdUrl(constructedUrl);
 		}
-	}, [studyId]); 
+	}, [studyId]);
 
 	function handleInputError(errMessage) {
 		setError(errMessage);
@@ -100,7 +104,7 @@ export const ConfigEditor = ({
 		}
 		if (error) return;
 
-		if (linkId && linkId !== "" && linkId.length === LINK_ID_LENGTH) {
+		if (linkId && linkId !== "" && String(linkId).length === LINK_ID_LENGTH) {
 			let nextUrl;
 			if (loadFrom === "editor") {
 				const nextConfig = pendingJson;
@@ -122,7 +126,7 @@ export const ConfigEditor = ({
 		}
 	}
 
-	async function handleConfigGeneration() {
+	function handleConfigGeneration() {
 		setDatasetUrls(EXAMPLE_URL);
 		setShowReset(true);
 		const sanitizedUrls = sanitizeURLs(EXAMPLE_URL);
@@ -132,8 +136,8 @@ export const ConfigEditor = ({
 		setGenerateConfigError(null);
 		setError(null);
 		try {
-			const configJson = await generateConfig(sanitizedUrls, "Basic");
-			setPendingJson(() => JSON.stringify(configJson, null, 2));
+			// const configJson = await generateConfig(sanitizedUrls, "Basic");
+			setPendingJson(() => JSON.stringify(exampleConfig, null, 2));
 			setLoadFrom("editor");
 		} catch (e) {
 			setGenerateConfigError(e.message);

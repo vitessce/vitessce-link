@@ -4,8 +4,9 @@ import { useHashParam, useSetHashParams } from "../utils/use-hash-param.js";
 import { baseJson } from "../utils/config-examples.js";
 import { ConfigEditor } from "./../components/ConfigEditor";
 import { QueryParamProvider } from "use-query-params";
-import {fetcher} from './../utils/utility-functions.js';
-import {LoadingOverlay} from './../components/loadingOverlay';
+import { fetcher } from "./../utils/utility-functions.js";
+import { LoadingOverlay } from "./../components/loadingOverlay";
+import { ERROR_MESSAGES } from "../utils/constants.js";
 
 function IndexWithHashParams() {
 	const setHashParams = useSetHashParams();
@@ -19,18 +20,24 @@ function IndexWithHashParams() {
 
 	const { isValidating } = useSWR(url, fetcher, {
 		onError: (err) => {
-			console.log(err, "test")
+			console.log(err, "test");
 			setError(err.message);
 			setLoading(false);
 		},
 		onSuccess: (data) => {
 			if (data) {
-				//TODO:  Need to add it in the linkController component
-				data.linkID = linkId;
-				console.log(linkId, data.linkID)
-				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
-				setUrlFromEditor(nextUrl);
-				setValidConfig(data);
+				const linkControllerIndex = data.layout.findIndex(
+					(comp) => comp.component === "linkController",
+				);
+				//TODO:  Need to add checks to config once settled
+				if (linkControllerIndex > -1) {
+					data.layout[linkControllerIndex].props.linkID = linkId;
+					const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
+					setUrlFromEditor(nextUrl);
+					setValidConfig(data);
+				} else {
+					setError(ERROR_MESSAGES.INVALID_CONFIG);
+				}
 			}
 			setLoading(false);
 		},
@@ -79,7 +86,7 @@ function IndexWithHashParams() {
 	}
 
 	if (loading || isValidating) {
-		return <LoadingOverlay />
+		return <LoadingOverlay />;
 	}
 
 	return <p>Error in configuration</p>;
