@@ -221,7 +221,7 @@ export const ConfigEditor = ({
 							onChange={(e) => handleConfigGeneration(e.target.value)}
 						/>
 					</div>
-					<div className={styles.containerRow}>
+					{/* <div className={styles.containerRow}>
 						<p className={styles.viewConfigInputUrlOrFileText}>
 							Alternatively, provide a URL to a config file.
 						</p>
@@ -234,8 +234,8 @@ export const ConfigEditor = ({
 								onChange={handleUrlChange}
 							/>
 						</div>
-					</div>
-					<div className={styles.containerRow}>
+					</div> */}
+					{/* <div className={styles.containerRow}>
 						<p className={styles.viewConfigInputUrlOrFileText}>
 							Or drag & drop a file from your local machine
 						</p>
@@ -249,7 +249,7 @@ export const ConfigEditor = ({
 								<span>Drop a file</span>
 							)}
 						</div>
-					</div>
+					</div> */}
 					<div className={styles.viewConfigGoDiv}>
 						<button
 							type="button"
