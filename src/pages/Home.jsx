@@ -22,16 +22,20 @@ export default function Home() {
 		},
 		onSuccess: (data) => {
 			if (data) {
-				const linkControllerIndex = data.layout.findIndex(
+				console.log(data);
+				const linkControllerIndex = data?.layout.findIndex(
 					(comp) => comp.component === "linkController",
 				);
 				//TODO:  Need to add checks to config once settled
 				if (linkControllerIndex > -1) {
-					console.log(linkId);
-					data.layout[linkControllerIndex].props.linkID = linkId;
-					const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
-					const vitessceLink = `https://vitessce.io/?url=${nextUrl}`;
-					window.location.href = vitessceLink;
+					try {
+						data.layout[linkControllerIndex].props.linkID = linkId;
+						const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
+						const vitessceLink = `https://vitessce.io/?url=${nextUrl}`;
+						window.location.href = vitessceLink;
+					} catch {
+						setError(ERROR_MESSAGES.INVALID_CONFIG);
+					}
 				} else {
 					setError(ERROR_MESSAGES.INVALID_CONFIG);
 				}

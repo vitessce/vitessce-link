@@ -2,7 +2,7 @@
 import React, { useCallback, useState, useEffect } from "react";
 import { useDropzone } from "react-dropzone";
 import useSWR from "swr";
-import { generateConfig, getHintOptions } from "vitessce";
+import { getHintOptions } from "vitessce";
 
 import { StudyIdInput } from "../StudyIdInput";
 import { baseJson, exampleConfig } from "../../utils/config-examples.js";
@@ -21,6 +21,7 @@ import {
 	validateConfig,
 	sanitizeURLs,
 	studyIdFetcher,
+	updateConfigWithExampleURL,
 } from "../../utils/utility-functions.js";
 
 export const ConfigEditor = ({
@@ -102,7 +103,7 @@ export const ConfigEditor = ({
 			setError(ERROR_MESSAGES.NO_DATASET_URL_ERROR);
 			return;
 		}
-		if (error) return;
+		if (error || generateConfigError) return;
 
 		if (linkId && linkId !== "" && String(linkId).length === LINK_ID_LENGTH) {
 			let nextUrl;
@@ -126,18 +127,27 @@ export const ConfigEditor = ({
 		}
 	}
 
-	function handleConfigGeneration() {
-		setDatasetUrls(EXAMPLE_URL);
+	function handleConfigGeneration(url) {
+		setDatasetUrls(url);
 		setShowReset(true);
-		const sanitizedUrls = sanitizeURLs(EXAMPLE_URL);
-		if (sanitizedUrls.length === 0) {
-			return;
-		}
 		setGenerateConfigError(null);
 		setError(null);
+		const sanitizedUrls = sanitizeURLs(url);
+		if (sanitizedUrls.length < 1) {
+			setError(ERROR_MESSAGES.NO_DATASET_URL_ERROR);
+			return;
+		}
+		if (sanitizedUrls.length < 1) {
+			setError(ERROR_MESSAGES.DATASET_LIMIT_ERROR);
+			return;
+		}
 		try {
-			// const configJson = await generateConfig(sanitizedUrls, "Basic");
-			setPendingJson(() => JSON.stringify(exampleConfig, null, 2));
+			getHintOptions(sanitizedUrls);
+			const configJson = updateConfigWithExampleURL(
+				exampleConfig,
+				sanitizedUrls,
+			);
+			setPendingJson(() => JSON.stringify(configJson, null, 2));
 			setLoadFrom("editor");
 		} catch (e) {
 			setGenerateConfigError(e.message);
@@ -159,24 +169,6 @@ export const ConfigEditor = ({
 				setLoadFrom("editor");
 			}
 		} else setError(null);
-	}
-
-	function handleTextAreaURLChange(newDatasetUrls) {
-		setDatasetUrls(newDatasetUrls);
-		setInputURL(newDatasetUrls);
-		const sanitizedUrls = sanitizeURLs(newDatasetUrls);
-		if (sanitizedUrls.length === 0) {
-			setError(ERROR_MESSAGES.INCORRECT_URL_ERROR);
-			return;
-		}
-		try {
-			// This gives an error if file type is incorrect - so keeping it
-			getHintOptions(sanitizedUrls);
-			setGenerateConfigError(null);
-			setPendingJson(baseJson);
-		} catch (e) {
-			setGenerateConfigError(e.message);
-		}
 	}
 
 	function resetEditor() {
@@ -203,11 +195,11 @@ export const ConfigEditor = ({
 					</div>
 					<div className={styles.containerRow}>
 						<p className={styles.viewConfigInputUrlOrFileText}>
-							Enter the URLs to one or more data files (semicolon-separated).
+							Enter the URL to a data file.
 							<button
 								className={styles.tryResetButtons}
 								type="button"
-								onClick={() => handleConfigGeneration()}
+								onClick={() => handleConfigGeneration(EXAMPLE_URL)}
 							>
 								Try an example
 							</button>
@@ -224,9 +216,9 @@ export const ConfigEditor = ({
 						<textarea
 							type="text"
 							className={styles.viewConfigUrlTextarea}
-							placeholder="One or more file URLs (semicolon-separated)"
+							placeholder="One file URL"
 							value={datasetUrls}
-							onChange={(e) => handleTextAreaURLChange(e.target.value)}
+							onChange={(e) => handleConfigGeneration(e.target.value)}
 						/>
 					</div>
 					<div className={styles.containerRow}>

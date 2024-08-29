@@ -109,11 +109,11 @@
   padding: 0.125rem 0.3rem;
   margin-left: 0.6rem;
   border-radius: 0.5rem;
-  border: 0.125rem solid var(--dropzone);
+  border: 0.125rem solid var(--vit-light-grey);
 }
 
 .tryResetButtons:hover{
   cursor: pointer;
-  background-color: var(--dropzone);
+  background-color: var(--vit-light-grey);
   color: var(--vit-input-foreground);
 }

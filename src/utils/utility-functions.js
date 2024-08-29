@@ -1,6 +1,7 @@
 import { upgradeAndParse } from "@vitessce/schemas";
+import { VitessceConfig } from "vitessce";
 
-export function validateConfig(nextConfig) {
+export const validateConfig = (nextConfig) => {
 	let upgradeSuccess;
 	let failureReason;
 	try {
@@ -12,14 +13,22 @@ export function validateConfig(nextConfig) {
 		console.error(e);
 	}
 	return [upgradeSuccess, failureReason];
-}
+};
 
-export function sanitizeURLs(urls) {
+export const sanitizeURLs = (urls) => {
 	return urls
 		.split(/;/)
 		.map((url) => url.trim())
 		.filter((url) => url.match(/^http/g));
-}
+};
+
+// Only 1 dataset url is allowed at the moment
+export const updateConfigWithExampleURL = (config, urls) => {
+	if (urls.length === 1) {
+		config.datasets[0].files[0].url = urls[0];
+	}
+	return config;
+};
 
 export const studyIdFetcher = async (url) => {
 	try {

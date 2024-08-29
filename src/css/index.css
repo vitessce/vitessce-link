@@ -11,6 +11,7 @@ body {
   --vit-font-color-base: #1c1e21;
   --vit-input-foreground: #0451a5;
   --vit-input-background: #ffffff;
+  --vit-light-grey: #cbc9c9;
   --dropzone: #989898;
   font-family: 'Inter', sans-serif;
 }

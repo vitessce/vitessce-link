@@ -14,4 +14,5 @@ export const ERROR_MESSAGES = {
 	LINK_ID_RESPONSE_ERROR: "Could not get Link Id",
 	NO_DATASET_URL_ERROR: "No dataset URL is provided",
 	INVALID_CONFIG: "Invalid config: LinkController missing",
+	DATASET_LIMIT_ERROR: "Only one dataset URL is allowed",
 };
