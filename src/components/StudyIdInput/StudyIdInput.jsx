@@ -7,13 +7,13 @@ export const StudyIdInput = ({ onInputError, onInputChange }) => {
 		const { value } = e.target;
 		if (value.trim()?.length === STUDY_ID_LENGTH) {
 			if (!/^\d+$/.test(value)) {
-				onInputError("Study ID must be numbers only");
+				onInputError("Team ID must be numbers only");
 			} else {
 				onInputChange(value);
 				onInputError(null);
 			}
 		} else {
-			onInputError(`Study ID must be ${STUDY_ID_LENGTH} digits`);
+			onInputError(`Team ID must be ${STUDY_ID_LENGTH} digits`);
 		}
 	};
 
@@ -24,7 +24,7 @@ export const StudyIdInput = ({ onInputError, onInputChange }) => {
 				htmlFor="inputField"
 			>
 				{" "}
-				Enter your study id
+				Enter your Team ID
 			</label>
 			<input
 				type="text"

@@ -1,5 +1,5 @@
 import { upgradeAndParse } from "@vitessce/schemas";
-import { VitessceConfig } from "vitessce";
+import { ERROR_MESSAGES } from "./constants";
 
 export const validateConfig = (nextConfig) => {
 	let upgradeSuccess;
@@ -35,11 +35,11 @@ export const studyIdFetcher = async (url) => {
 		const response = await fetch(url);
 
 		if (response.status === 403) {
-			throw new Error("Study Id is not valid");
+			throw new Error(ERROR_MESSAGES.INVALID_STUDY_ID);
 		}
 
 		if (!response.ok) {
-			throw new Error("Could not fetch Link Id");
+			throw new Error("Could not fetch Link ID");
 		}
 
 		return await response.json();

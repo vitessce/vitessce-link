@@ -256,7 +256,7 @@ export const ConfigEditor = ({
 							className={styles.viewConfigGo}
 							onClick={handleEditorGo}
 						>
-							Load from {loadFrom}
+							Launch
 						</button>
 					</div>
 				</div>

@@ -10,7 +10,7 @@ export const EXAMPLE_URL =
 	"https://assets.hubmapconsortium.org/a4be39d9c1606130450a011d2f1feeff/ometiff-pyramids/processedMicroscopy/VAN0012-RK-102-167-PAS_IMS_images/VAN0012-RK-102-167-PAS_IMS-registered.ome.tif";
 
 export const ERROR_MESSAGES = {
-	INVALID_STUDY_ID: "Study Id is not valid",
+	INVALID_STUDY_ID: "Team ID is not valid",
 	LINK_ID_RESPONSE_ERROR: "Could not get Link Id",
 	NO_DATASET_URL_ERROR: "No dataset URL is provided",
 	INVALID_CONFIG: "Invalid config: LinkController missing",
