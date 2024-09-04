@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
@@ -25,9 +25,8 @@ import {
 export const ConfigEditor = ({
 	pendingJson,
 	setPendingJson,
-	error,
-	setError,
-	setLoading,
+	serverError,
+	setServerError,
 	setUrl,
 	setLinkIdInput,
 }) => {
@@ -35,8 +34,10 @@ export const ConfigEditor = ({
 	const [generateConfigError, setGenerateConfigError] = useState(null);
 	const [studyId, setStudyId] = useState(null);
 	const [linkId, setLinkId] = useState(null);
-	const [linkIdUrl, setLinkIdUrl] = useState(null);
-	const [showReset, setShowReset] = useState(null);
+	const [error, setError] = useState(null);
+
+	const linkIdUrl = studyId ? `${LINK_ID_ENDPOINT_URL}${studyId}` : null;
+	const showReset = Boolean(datasetUrls)
 
 	function handleGetLinkId(studyId) {
 		setStudyId(studyId);
@@ -44,25 +45,17 @@ export const ConfigEditor = ({
 
 	useSWR(linkIdUrl, studyIdFetcher, {
 		onError: (err) => {
-			setError(err.message);
-			setLoading(false);
+			setServerError(err.message);
 		},
 		onSuccess: (data) => {
 			if (data && data[LINK_ID_KEY]) {
 				setLinkId(data[LINK_ID_KEY]);
 			}
-			setLoading(false);
+			setServerError(null)
 		},
-		shouldRetryOnError: false,
 	});
 
-	useEffect(() => {
-		if (studyId) {
-			const constructedUrl = `${LINK_ID_ENDPOINT_URL}${studyId}`;
-			setLinkIdUrl(constructedUrl);
-		}
-	}, [studyId]);
-
+	
 	function handleInputError(errMessage) {
 		setError(errMessage);
 	}
@@ -74,15 +67,14 @@ export const ConfigEditor = ({
 		}
 		if (error || generateConfigError) return;
 
-		if (linkId && linkId !== "" && String(linkId).length === LINK_ID_LENGTH) {
-			let nextUrl;
+		if (linkId && String(linkId).length === LINK_ID_LENGTH) {
 			const nextConfig = pendingJson;
-			nextUrl = `data:,${encodeURIComponent(nextConfig)}`;
 			const [valid, failureReason] = validateConfig(nextConfig);
 			if (!valid) {
 				setError(failureReason);
 				return;
 			}
+			const nextUrl = `data:,${encodeURIComponent(nextConfig)}`;
 			setUrl(nextUrl);
 			setLinkIdInput(linkId);
 		} else {
@@ -91,10 +83,9 @@ export const ConfigEditor = ({
 	}
 
 	function handleConfigGeneration(url) {
-		setDatasetUrls(url);
-		setShowReset(true);
-		setGenerateConfigError(null);
-		setError(null);
+		setDatasetUrls(() => url);
+		setGenerateConfigError(() => null);
+		setError(() => null);
 		const sanitizedUrls = sanitizeURLs(url);
 		if (sanitizedUrls.length < 1) {
 			setError(ERROR_MESSAGES.NO_DATASET_URL_ERROR);
@@ -118,16 +109,15 @@ export const ConfigEditor = ({
 	}
 
 	function resetEditor() {
-		setPendingJson(baseJson);
-		setDatasetUrls("");
-		setShowReset(false);
+		setPendingJson(() => baseJson);
+		setDatasetUrls(() => "");
 	}
 
 	return (
 		<main className={styles.viewConfigEditorMain}>
 			<div className={styles.mainContainer}>
 				<div>
-					<ErrorDiv errorMessage={error ?? generateConfigError} />
+					<ErrorDiv errorMessage={error ?? generateConfigError ?? serverError} />
 					<div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}

@@ -11,6 +11,7 @@ export const EXAMPLE_URL =
 
 export const ERROR_MESSAGES = {
 	INVALID_STUDY_ID: "Team ID is not valid",
+	FORBIDDEN_STUDY_ID: "Team ID is forbidden",
 	LINK_ID_RESPONSE_ERROR: "Could not get Link Id",
 	NO_DATASET_URL_ERROR: "No dataset URL is provided",
 	INVALID_CONFIG: "Invalid config: LinkController missing",

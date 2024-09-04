@@ -35,7 +35,7 @@ export const studyIdFetcher = async (url) => {
 		const response = await fetch(url);
 
 		if (response.status === 403) {
-			throw new Error(ERROR_MESSAGES.INVALID_STUDY_ID);
+			throw new Error(ERROR_MESSAGES.FORBIDDEN_STUDY_ID);
 		}
 
 		if (!response.ok) {
