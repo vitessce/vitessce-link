@@ -1,6 +1,5 @@
 import useSWR from "swr";
 import { useState, useEffect } from "react";
-// import { useNavigate } from "react-router-dom";
 import { baseJson } from "../utils/config-examples.js";
 import { ConfigEditor } from "./../components/ConfigEditor";
 import { fetcher } from "./../utils/utility-functions.js";
@@ -16,7 +15,6 @@ export default function Home() {
 
 	const { isValidating } = useSWR(url, fetcher, {
 		onError: (err) => {
-			console.log(err, "test");
 			setError(err.message);
 			setLoading(false);
 		},
@@ -26,11 +24,13 @@ export default function Home() {
 				const linkControllerIndex = data?.layout.findIndex(
 					(comp) => comp.component === "linkController",
 				);
-				//TODO:  Need to add checks to config once settled
 				if (linkControllerIndex > -1) {
 					try {
+						console.log(linkId);
+						//  Adding linkID here in case we want to allow other types of config generation (drop file, etc.)
 						data.layout[linkControllerIndex].props.linkID = linkId;
 						const nextUrl = `data:,${encodeURIComponent(JSON.stringify(data, null, 2))}`;
+						// The following will change, either route to Eric's html file or add as component
 						const vitessceLink = `https://vitessce.io/?url=${nextUrl}`;
 						window.location.href = vitessceLink;
 					} catch {
