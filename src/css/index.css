@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+body {
+  margin: 0;
+}
+
+:root {
+  --vit-color-primary: #49a5b7;
+  --vit-z-index-fixed: 200;
+  --vit-navbar-height: 3.0rem;
+  --vit-font-color-base: #1c1e21;
+  --vit-input-foreground: #0451a5;
+  --vit-input-background: #ffffff;
+  --vit-light-grey: #cbc9c9;
+  --dropzone: #989898;
+  font-family: 'Inter', sans-serif;
+}

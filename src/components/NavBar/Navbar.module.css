@@ -1,0 +1,55 @@
+
+.navbarSticky {
+  position: sticky;
+  top: 0;
+  z-index: var(--vit-z-index-fixed);
+  display: flex;
+  padding: 0.5rem 1rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);;
+  background-color: #fff; 
+}
+
+.navbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 100%;
+
+}
+
+.navbarItems {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  min-width: 0;
+}
+
+.navbarItems a {
+  text-decoration: none;
+}
+
+.navbarItems a:hover {
+  color: var(--vit-color-primary)
+}
+
+.navbarLogo {
+  align-items: center;
+  color: var(--vit-font-color-base);
+  display: flex;
+  margin-right: 1rem;
+  min-width: 0;
+}
+
+.logoImageDiv {
+  flex: 0 0 auto;
+  height: 2rem;
+  margin-right: 0.5rem;
+}
+
+.logoImageDiv img {
+  height: 100%;
+}
+
+.navbarTitle {
+  flex: 1 1 auto;
+}

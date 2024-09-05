@@ -1,0 +1,16 @@
+/* Error Bar */
+
+.vitessceAppLoadError {
+    background-color: lightcoral;
+    margin-left: 1.25rem;
+    border-radius: 0.4rem;
+    width: 100%;
+  }
+  
+  .vitessceAppLoadError pre {
+    color: var(--vit-font-color-base);
+    margin: 0 0 1rem;
+    overflow: auto;
+    padding: 1rem;
+    font-size: 1rem
+  }
