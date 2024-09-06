@@ -274,7 +274,7 @@
         exampleConfig.layout[0].props.linkID = parseInt(this.value)
         let conf = JSON.stringify(exampleConfig, null, 2)
         const nextUrl = `data:,${encodeURIComponent(conf)}`;
-        window.location.href = `https://vitessce.io/?url=${nextUrl}`
+        window.location.href = `https://beta-mr.vitessce.io/?url=${nextUrl}`
       } else {
         this.el.textDisplay.classList.add("pin-login__text--error");
       }

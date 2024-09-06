@@ -28,7 +28,7 @@ export default function Home() {
 				configData.layout[linkControllerIndex].props.linkID = linkId;
 				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
 				// The following will change, either route to Eric's html file or add as component
-				const vitessceLink = `https://vitessce.io/?url=${nextUrl}`;
+				const vitessceLink = `https://beta-mr.vitessce.io/?url=${nextUrl}`;
 				window.location.href = vitessceLink;
 			} catch {
 				setError(ERROR_MESSAGES.INVALID_CONFIG);
