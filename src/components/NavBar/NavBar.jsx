@@ -8,7 +8,7 @@ export const Navbar = () => {
 				<div className={styles.navbarItems}>
 					<Link to="/" className={styles.navbarLogo}>
 						<div className={styles.logoImageDiv}>
-							<img src="/logo-v.png" alt="Logo" />
+							<img src="logo-v.png" alt="Logo" />
 						</div>
 						<b className={styles.navbarTitle}>Vitessce-Link</b>
 					</Link>

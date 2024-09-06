@@ -15,7 +15,7 @@ export default function Home() {
 	const { data: configData, isValidating , isLoading, error: swrError} = useSWR(url, fetcher)
 
 	if(swrError) {
-		setServerError(swrError.message) 
+		setServerError(swrError.message)
 	}
 	if (configData) {
 		const linkControllerIndex = configData?.layout.findIndex(
@@ -23,7 +23,7 @@ export default function Home() {
 		);
 		if (linkControllerIndex > -1) {
 			try {
-				console.log(linkId);
+				//console.log(linkId);
 				//  Adding linkID here in case we want to allow other types of config generation (drop file, etc.)
 				configData.layout[linkControllerIndex].props.linkID = linkId;
 				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
@@ -37,7 +37,7 @@ export default function Home() {
 			setError(ERROR_MESSAGES.INVALID_CONFIG);
 		}
 	}
-		
+
 	function setUrlFromEditor(nextUrl) {
 		setUrl(nextUrl);
 	}
