@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
+        body {
+            background: white;
+            font-family: 'Inter', sans-serif;
+            margin: 0px;
+        }
+
+        h1 {
+            margin: 20px;
+        }
+
+        .pin-login {
+            display: inline-block;
+            padding: 10px;
+            padding-left: 55px;
+            font-size: 35px;
+            user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            -webkit-user-select: none;
+            font-family: sans-serif;
+        }
+
+        .pin-login__text {
+            margin: 10px 0px 10px 10px;
+            padding: 10px;
+            width: 280px;
+            text-align: center;
+            height: 60px;
+            font-size: 1em;
+            border: 0;
+            color: #49a5b7;
+            box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0, 0, 0, .06);
+            outline: none;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+
+        .pin-login__text--error {
+            color: #901818;
+            background: #ffb3b3;
+            animation-name: loginError;
+            animation-duration: 0.1s;
+            animation-iteration-count: 2;
+        }
+
+        @keyframes loginError {
+            25% {
+                transform: translateX(-3px);
+            }
+            75% {
+                transform: translateX(3px);
+            }
+        }
+
+        @-moz-keyframes loginError {
+            25% {
+                transform: translateX(-3px);
+            }
+            75% {
+                transform: translateX(3px);
+            }
+        }
+
+        .pin-login__key {
+            width: 80px;
+            height: 80px;
+            margin: 10px;
+            background: #49a5b7;
+            color: white;
+            border-radius: 15%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .pin-login__key:active {
+            background: rgba(0, 0, 0, 0.25);
+        }
+
+        .custom {
+            margin-top: 28px;
+            margin-left: 28px;
+            width: 100%;
+            height: 100%;
+        }
+
+        .zero {
+            margin-top: -5px;
+        }
+
+        .root {
+            display: block;
+            unicode-bidi: isolate;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            display: flex;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        b {
+            flex: 1 1 auto;
+            color: black;
+        }
+
+        .nav3 {
+            flex: 0 0 auto;
+            height: 2rem;
+            margin-right: 0.5rem;
+        }
+
+        .a1 {
+            color: black;
+            align-items: center;
+            display: flex;
+            margin-right: 1rem;
+            min-width: 0;
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav2 {
+            align-items: center;
+            display: flex;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nav1 {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .pinText {
+            width: 280px;
+            margin-left: 80px;
+        }
+
+        .pin1 {
+            overflow: hidden;
+            padding: 2.5rem;
+            display: block;
+        }
+
+        .pinMain {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body>
+
+<!--<p>Click the button to put the new window in the current window.</p>-->
+<!--<button onclick="myFunction()">Try it</button>-->
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<div class="root">
+    <nav>
+        <div class="nav1">
+            <div class="nav2">
+                <a class="a1"
+                   href="/">
+                    <div class="nav3">
+                        <img src="public/logo-v.png" alt="Logo" style="height: 100%;">
+                    </div>
+                    <b>Vitessce Link</b>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="pinMain">
+        <div class="pin1">
+            <div class="pinText">
+                Enter your Link ID and press &#x2713;
+            </div>
+            <div class="pin-login" id="mainPinLogin">
+                <input type="text" readonly class="pin-login__text">
+                <div class="pin-login__numpad">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  class PinLogin {
+    constructor({el, loginEndpoint, redirectTo, maxNumbers = Infinity}) {
+      this.el = {
+        main: el,
+        numPad: el.querySelector(".pin-login__numpad"),
+        textDisplay: el.querySelector(".pin-login__text")
+      };
+
+      this.loginEndpoint = loginEndpoint;
+      this.redirectTo = redirectTo;
+      this.maxNumbers = maxNumbers;
+      this.value = "";
+
+      this._generatePad();
+    }
+
+    _generatePad() {
+      const padLayout = [
+        "1", "2", "3",
+        "4", "5", "6",
+        "7", "8", "9",
+        "backspace", "0", "done"
+      ];
+
+      padLayout.forEach(key => {
+        const insertBreak = key.search(/[369]/) !== -1;
+        const keyEl = document.createElement("div");
+
+        keyEl.classList.add("pin-login__key");
+        keyEl.classList.toggle("material-icons", isNaN(key));
+        keyEl.innerHTML = isNaN(key) ? "<div class='custom'>" + key + "</div>" : key === "0" ? "<div class='zero'>" + key + "</div>" : key;
+        keyEl.addEventListener("click", () => {
+          this._handleKeyPress(key)
+        });
+        this.el.numPad.appendChild(keyEl);
+
+        if (insertBreak) {
+          this.el.numPad.appendChild(document.createElement("br"));
+        }
+      });
+    }
+
+    _handleKeyPress(key) {
+      switch (key) {
+        case "backspace":
+          this.value = this.value.substring(0, this.value.length - 1);
+          this._updateValueText();
+          break;
+        case "done":
+          this._attemptLogin();
+          break;
+        default:
+          if (this.value.length < this.maxNumbers && !isNaN(key)) {
+            this.value += key;
+          }
+          this._updateValueText();
+          break;
+      }
+
+
+    }
+
+    _updateValueText() {
+      // this.el.textDisplay.value = "_".repeat(this.value.length);
+      this.el.textDisplay.value = this.value;
+      this.el.textDisplay.classList.remove("pin-login__text--error");
+    }
+
+    _attemptLogin() {
+      if (this.value.length === 4) {
+        exampleConfig.layout[0].props.linkID = parseInt(this.value)
+        let conf = JSON.stringify(exampleConfig, null, 2)
+        const nextUrl = `data:,${encodeURIComponent(conf)}`;
+        // window.open(`https://beta-mr.vitessce.io/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
+        //window.open(`https://ericmoerth.at/vitessceXR/?dataset=123&ws=true&code=${this.value}&send=true`, "_self");
+        window.location.href = `https:///ericmoerth.at/vitessce/?url=${nextUrl}`
+      } else {
+        this.el.textDisplay.classList.add("pin-login__text--error");
+      }
+    }
+  }
+
+  new PinLogin({
+    el: document.getElementById("mainPinLogin"),
+    loginEndpoint: "login.php",
+    redirectTo: "dashboard.html"
+  });
+
+  const exampleConfig = {
+    version: "1.0.16",
+    name: "Link controller demo",
+    datasets: [
+      {
+        uid: "A",
+        name: "My dataset",
+        files: [
+          {
+            fileType: "image.ome-tiff",
+            url: "https://data-2.vitessce.io/data/redBloodCell.ome.tiff",
+            coordinationValues: {
+              fileUid: "file"
+            }
+          }
+        ]
+      }
+    ],
+    coordinationSpace: {
+      dataset: {
+        A: "A"
+      }
+    },
+    layout: [
+      {
+        component: "linkController",
+        props: {
+          linkID: 1234
+        },
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 8,
+        coordinationScopes: {
+          dataset: "A"
+        }
+      }
+    ],
+    initStrategy: "auto"
+  };
+
+</script>
+
+</body>
+</html>
