@@ -1,1 +1,1 @@
-export { Pinpad } from './Pinpad'
+export { Pinpad } from "./Pinpad";

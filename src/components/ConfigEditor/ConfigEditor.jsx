@@ -37,7 +37,7 @@ export const ConfigEditor = ({
 	const [error, setError] = useState(null);
 
 	const linkIdUrl = studyId ? `${LINK_ID_ENDPOINT_URL}${studyId}` : null;
-	const showReset = Boolean(datasetUrls)
+	const showReset = Boolean(datasetUrls);
 
 	function handleGetLinkId(studyId) {
 		setStudyId(studyId);
@@ -51,11 +51,10 @@ export const ConfigEditor = ({
 			if (data && data[LINK_ID_KEY]) {
 				setLinkId(data[LINK_ID_KEY]);
 			}
-			setServerError(null)
+			setServerError(null);
 		},
 	});
 
-	
 	function handleInputError(errMessage) {
 		setError(errMessage);
 	}
@@ -117,7 +116,9 @@ export const ConfigEditor = ({
 		<main className={styles.viewConfigEditorMain}>
 			<div className={styles.mainContainer}>
 				<div>
-					<ErrorDiv errorMessage={error ?? generateConfigError ?? serverError} />
+					<ErrorDiv
+						errorMessage={error ?? generateConfigError ?? serverError}
+					/>
 					<div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}

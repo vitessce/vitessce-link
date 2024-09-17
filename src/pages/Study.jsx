@@ -4,7 +4,7 @@ import { baseJson } from "../utils/config-examples.js";
 import { ConfigEditor } from "./../components/ConfigEditor";
 import { fetcher } from "./../utils/utility-functions.js";
 import { LoadingOverlay } from "./../components/loadingOverlay";
-import { ERROR_MESSAGES , VITESSCE_LINK_SITE} from "../utils/constants.js";
+import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "../utils/constants.js";
 
 export default function Study() {
 	const [serverError, setServerError] = useState(null);
@@ -12,10 +12,15 @@ export default function Study() {
 	const [linkId, setLinkId] = useState(null);
 	const [url, setUrl] = useState(null);
 
-	const { data: configData, isValidating , isLoading, error: swrError} = useSWR(url, fetcher)
+	const {
+		data: configData,
+		isValidating,
+		isLoading,
+		error: swrError,
+	} = useSWR(url, fetcher);
 
-	if(swrError) {
-		setServerError(swrError.message) 
+	if (swrError) {
+		setServerError(swrError.message);
 	}
 	if (configData) {
 		const linkControllerIndex = configData?.layout.findIndex(
@@ -37,7 +42,7 @@ export default function Study() {
 			setError(ERROR_MESSAGES.INVALID_CONFIG);
 		}
 	}
-		
+
 	function setUrlFromEditor(nextUrl) {
 		setUrl(nextUrl);
 	}

@@ -1,55 +1,55 @@
 .pinLoginContainer {
-    display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .pinErrorContainer{
-   display: flex; 
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 50%;
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+  padding: 1rem;
 }
 
-  .pinLogin {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    padding: 4rem;
-  }
+.pinLogin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 4rem;
+}
 
-  .pinInput {
-    margin-bottom: 2rem;
-    display: flex;
-    flex-direction: column;
-    
-  }
-
-  .pinInputLabel {
-    margin-bottom: 1rem;
-  }
-
-  .pinInputBox {
-    padding: 1rem 1rem;
-    font-size: 1.25rem;
-    border: 0;
-    box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0,0,0,.06);
-    outline: none;
-    color: var(--vit-input-foreground);
-    background-color: var(--vit-input-background);
-    box-sizing: border-box;
-    width: 100%;
-
-  }
+.pinInput {
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
   
-  .pinLoginNumpad {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 0.5rem;
-  }
-  
-  
+}
+
+.pinInputLabel {
+  margin-bottom: 1rem;
+}
+
+.pinInputBox {
+  padding: 1rem 1rem;
+  font-size: 1.25rem;
+  border: 0;
+  box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0,0,0,.06);
+  outline: none;
+  color: var(--vit-input-foreground);
+  background-color: var(--vit-input-background);
+  box-sizing: border-box;
+  width: 100%;
+
+}
+
+.pinLoginNumpad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.5rem;
+}
+

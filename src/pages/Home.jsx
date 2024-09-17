@@ -1,7 +1,4 @@
-
-import { Pinpad } from "../components/Pinpad"
+import { Pinpad } from "../components/Pinpad";
 export default function Home() {
-	return (
-		<Pinpad/>
-	)
+	return <Pinpad />;
 }
