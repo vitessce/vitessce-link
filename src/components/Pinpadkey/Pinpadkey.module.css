@@ -1,27 +1,29 @@
 
-  .pinLogin__key {
+  .pinLoginKey {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 60px; /* Fixed height for all keys */
-    font-size: 1.5rem;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 0.25rem;
+    height: 80px;
+    width: 80px;
+    font-size: 2.2rem;
+    color: #fff;
+    background-color: var(--vit-color-primary);
+    border-radius: 0.35rem;
     cursor: pointer;
     user-select: none;
     box-sizing: border-box; 
   }
   
-  .pinLogin__key:hover {
+  .pinLoginKey:hover {
+    color: var(--vit-color-primary);
     background-color: #e0e0e0;
   }
   
-  .pinLogin__key:active {
+  .pinLoginKey:active {
     background-color: #d0d0d0;
   }
   
-  .pinLogin__textError {
+  .pinLoginTextError {
     border-color: red;
   }
   

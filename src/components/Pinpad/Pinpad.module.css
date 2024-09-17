@@ -3,7 +3,15 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
+}
+
+.pinErrorContainer{
+   display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 50%;
+}
 
   .pinLogin {
     display: flex;
@@ -38,20 +46,10 @@
 
   }
   
-  .pinLogin__text {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    border: 2px solid #ddd;
-    border-radius: 0.25rem;
-    width: 200px;
-    text-align: center;
-  }
-  
-  .pinLogin__numpad {
+  .pinLoginNumpad {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 0.5rem;
-    /* width: 300px; */
   }
+  
   

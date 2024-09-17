@@ -1,35 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { ErrorDiv } from '../ErrorDiv/ErrorDiv';
+
 import styles from './Pinpad.module.css'
 import {PINPAD_MUI_KEYS, LINK_ID_LENGTH, VITESSCE_LINK_SITE} from '../../utils/constants'
 import {exampleConfigHeadset} from '../../utils/config-examples'
 import {PinpadKey}  from '../Pinpadkey';
-export const Pinpad = ({ loginEndpoint, redirectTo }) => {
-  const [value, setValue] = useState('');
 
+export const Pinpad = () => {
+
+  const [linkId, setLinkId] = useState('');
+  const [error, setError] = useState(null);
 
   const handleKeyPress = (key) => {
     console.log(key)
     if (key === PINPAD_MUI_KEYS.BACKSPACE) {
-      setValue(value.slice(0, -1));
+      setLinkId(() => linkId.slice(0, -1));
     } else if (key === PINPAD_MUI_KEYS.DONE) {
       attemptLogin();
-    } else if (value.length < LINK_ID_LENGTH && !isNaN(key)) {
-      setValue(value + key);
+    } else if (linkId.length < LINK_ID_LENGTH && !isNaN(key)) {
+        setLinkId(() => linkId + key);
     }
   };
 
-  const updateValueText = () => {
-    // This is managed via the `value` state directly in the JSX
-  };
+  // To remove the error as soon as we hit the digit limit
+  useEffect(() => {
+    if (linkId.length === LINK_ID_LENGTH) {
+      setError(null);
+    }
+  }, [linkId]);
 
   const attemptLogin = () => {
-    if (value.length === LINK_ID_LENGTH) {
-      exampleConfigHeadset.layout[0].props.linkID = value
+    console.log("login")
+    // TODO: Do we want to put other checks in place, such as matching linkId?
+    if (linkId.length === LINK_ID_LENGTH) {
+        setError(() => null)
+      exampleConfigHeadset.layout[0].props.linkId = linkId
       const conf = JSON.stringify(exampleConfigHeadset, null, 2);
       const nextUrl = `data:,${encodeURIComponent(conf)}`;
       window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;
     } else {
-      alert('Please enter a 4-digit PIN');
+        
+        setError(() => 'Enter a valid Link ID')
     }
   };
 
@@ -42,11 +53,14 @@ export const Pinpad = ({ loginEndpoint, redirectTo }) => {
 
   return (
         <main className={styles.pinLoginContainer}>
+            <div className={styles.pinErrorContainer}>
+            {error && <ErrorDiv errorMessage = {error}/>}
+
+            </div>
             <div className={styles.pinLogin}>
                 <div className={styles.pinInput}>
 
                 <label className={styles.pinInputLabel}
-				// className={`${styles.}`}
 				htmlFor="inputField"
                 >
                     Enter your Link ID and press &#x2713;
@@ -57,15 +71,15 @@ export const Pinpad = ({ loginEndpoint, redirectTo }) => {
                     className={styles.pinInputBox}
                     placeholder={`${LINK_ID_LENGTH}-Digit Id`}
                     maxLength={LINK_ID_LENGTH}
-                    value={value}
+                    value={linkId}
                     readOnly
                 />
                 </div>
 
 
-                <div className={styles.pinLogin__numpad}>
+                <div className={styles.pinLoginNumpad}>
                     {padLayout.map(key => (
-                            <PinpadKey pinkey={key} key={key} onHandleKeyPress={handleKeyPress}/>
+                        <PinpadKey pinkey={key} key={key} onHandleKeyPress={handleKeyPress}/>
                     ))}
                 </div>
                 </div>
