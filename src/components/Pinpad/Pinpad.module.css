@@ -1,0 +1,57 @@
+.pinLoginContainer {
+    display: flex; 
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pinLogin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 4rem;
+  }
+
+  .pinInput {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+  .pinInputLabel {
+    margin-bottom: 1rem;
+  }
+
+  .pinInputBox {
+    padding: 1rem 1rem;
+    font-size: 1.25rem;
+    border: 0;
+    box-shadow: -0.2rem 0.2rem 0.3rem 0.3rem rgba(0,0,0,.06);
+    outline: none;
+    color: var(--vit-input-foreground);
+    background-color: var(--vit-input-background);
+    box-sizing: border-box;
+    width: 100%;
+
+  }
+  
+  .pinLogin__text {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+    border: 2px solid #ddd;
+    border-radius: 0.25rem;
+    width: 200px;
+    text-align: center;
+  }
+  
+  .pinLogin__numpad {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0.5rem;
+    /* width: 300px; */
+  }
+  

@@ -2,7 +2,7 @@ export const STUDY_ID_LENGTH = 4;
 export const LINK_ID_LENGTH = 4;
 export const INPUT_DEBOUNCE_SECONDS = 500;
 export const LINK_ID_KEY = "link_id";
-
+export const VITESSCE_LINK_SITE= 'https://beta-mr.vitessce.io/?url=';
 export const LINK_ID_ENDPOINT_URL =
 	"https://mr-study.vitessce.io/link?study_id=";
 
@@ -17,3 +17,9 @@ export const ERROR_MESSAGES = {
 	INVALID_CONFIG: "Invalid config: LinkController missing",
 	DATASET_LIMIT_ERROR: "Only one dataset URL is allowed",
 };
+
+export const PINPAD_MUI_KEYS = {
+	BACKSPACE: 'backspace',
+	DONE: 'done'
+}
+

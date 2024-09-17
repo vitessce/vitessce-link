@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
 import { StudyIdInput } from "../StudyIdInput";
-import { baseJson, exampleConfig } from "../../utils/config-examples.js";
+import { baseJson, exampleConfigEditor } from "../../utils/config-examples.js";
 import { ErrorDiv } from "../ErrorDiv";
 
 import styles from "./ConfigEditor.module.css";
@@ -98,7 +98,7 @@ export const ConfigEditor = ({
 		try {
 			getHintOptions(sanitizedUrls);
 			const configJson = updateConfigWithExampleURL(
-				exampleConfig,
+				exampleConfigEditor,
 				sanitizedUrls,
 			);
 			setPendingJson(() => JSON.stringify(configJson, null, 2));

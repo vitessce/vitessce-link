@@ -8,9 +8,9 @@ export const baseJson = `{
   "initStrategy": "auto"
 }`;
 
-export const exampleConfig = {
-	version: "1.0.15",
-	name: "Vitessce-Link Demo",
+export const exampleConfigEditor = {
+	version: "1.0.16",
+	name: "Vitessce Link Demo",
 	description: "Test",
 	datasets: [
 		{
@@ -152,3 +152,45 @@ export const exampleConfig = {
 	],
 	initStrategy: "auto",
 };
+
+
+export const exampleConfigHeadset = {
+    version: "1.0.16",
+    name: "Link controller demo",
+    datasets: [
+      {
+        uid: "A",
+        name: "My dataset",
+        files: [
+          {
+            fileType: "image.ome-tiff",
+            url: "https://data-2.vitessce.io/data/redBloodCell.ome.tiff",
+            coordinationValues: {
+              fileUid: "file"
+            }
+          }
+        ]
+      }
+    ],
+    coordinationSpace: {
+      dataset: {
+        A: "A"
+      }
+    },
+    layout: [
+      {
+        component: "linkController",
+        props: {
+          linkID: 1234
+        },
+        x: 0,
+        y: 0,
+        w: 3,
+        h: 8,
+        coordinationScopes: {
+          dataset: "A"
+        }
+      }
+    ],
+    initStrategy: "auto"
+  };
