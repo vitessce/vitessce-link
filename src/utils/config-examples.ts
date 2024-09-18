@@ -1,19 +1,19 @@
 export interface CoordinationSpace {
 	[key: string]: { [key: string]: any };
-  }
-  
+}
+
 export interface File {
 	fileType: string;
 	url: string;
 	coordinationValues: { [key: string]: string };
-  }
-  
+}
+
 export interface Dataset {
 	uid: string;
 	name: string;
 	files: File[];
-  }
-  
+}
+
 export interface Layout {
 	component: string;
 	props?: { [key: string]: any };
@@ -22,8 +22,8 @@ export interface Layout {
 	w: number;
 	h: number;
 	coordinationScopes?: { [key: string]: any };
-  }
-  
+}
+
 export interface Config {
 	version: string;
 	name: string;
@@ -32,20 +32,19 @@ export interface Config {
 	coordinationSpace: CoordinationSpace;
 	layout: Layout[];
 	initStrategy: string;
-  }
+}
 
-  
-export const baseJson : Config = {
-  "version": "1.0.15",
-  "name": "My config",
-  "description": "Test",
-  "datasets": [],
-  "coordinationSpace": {},
-  "layout": [],
-  "initStrategy": "auto"
+export const baseJson: Config = {
+	version: "1.0.15",
+	name: "My config",
+	description: "Test",
+	datasets: [],
+	coordinationSpace: {},
+	layout: [],
+	initStrategy: "auto",
 };
 
-export const exampleConfigEditor : Config = {
+export const exampleConfigEditor: Config = {
 	version: "1.0.16",
 	name: "Vitessce Link Demo",
 	description: "Test",
@@ -190,7 +189,7 @@ export const exampleConfigEditor : Config = {
 	initStrategy: "auto",
 };
 
-export const exampleConfigHeadset:Config = {
+export const exampleConfigHeadset: Config = {
 	version: "1.0.16",
 	name: "Link controller demo",
 	datasets: [

@@ -22,7 +22,6 @@ import {
 	updateConfigWithExampleURL,
 } from "../../utils/utility-functions.ts";
 
-
 interface ConfigEditorProps {
 	pendingJson: string;
 	setPendingJson: (json: string) => void;
@@ -32,7 +31,7 @@ interface ConfigEditorProps {
 	setLinkIdInput: (linkId: string) => void;
 }
 
-export const ConfigEditor: React.FC<ConfigEditorProps>= ({
+export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	pendingJson,
 	setPendingJson,
 	serverError,
@@ -41,15 +40,17 @@ export const ConfigEditor: React.FC<ConfigEditorProps>= ({
 	setLinkIdInput,
 }) => {
 	const [datasetUrls, setDatasetUrls] = useState<string>("");
-	const [generateConfigError, setGenerateConfigError] = useState<string|null>(null);
-	const [studyId, setStudyId] = useState<string|null>(null);
-	const [linkId, setLinkId] = useState<string|null>(null);
-	const [error, setError] = useState<string|null>(null);
+	const [generateConfigError, setGenerateConfigError] = useState<string | null>(
+		null,
+	);
+	const [studyId, setStudyId] = useState<string | null>(null);
+	const [linkId, setLinkId] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	const linkIdUrl = studyId ? `${LINK_ID_ENDPOINT_URL}${studyId}` : null;
 	const showReset = Boolean(datasetUrls);
 
-	function handleGetLinkId(studyId:string) {
+	function handleGetLinkId(studyId: string) {
 		setStudyId(studyId);
 	}
 
@@ -65,7 +66,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps>= ({
 		},
 	});
 
-	function handleInputError(errMessage:string|null) {
+	function handleInputError(errMessage: string | null) {
 		setError(errMessage);
 	}
 
@@ -91,7 +92,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps>= ({
 		}
 	}
 
-	function handleConfigGeneration(url:string) {
+	function handleConfigGeneration(url: string) {
 		setDatasetUrls(() => url);
 		setGenerateConfigError(() => null);
 		setError(() => null);

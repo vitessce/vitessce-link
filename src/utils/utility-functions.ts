@@ -2,13 +2,15 @@ import { upgradeAndParse } from "@vitessce/schemas";
 import { ERROR_MESSAGES } from "./constants";
 import { Config } from "./config-examples";
 
-export const validateConfig = (nextConfig: string):[boolean, string | null] => {
+export const validateConfig = (
+	nextConfig: string,
+): [boolean, string | null] => {
 	let upgradeSuccess: boolean;
 	let failureReason: Config | any = null;
 	try {
 		failureReason = upgradeAndParse(JSON.parse(nextConfig));
 		upgradeSuccess = true;
-	} catch (e:any) {
+	} catch (e: any) {
 		upgradeSuccess = false;
 		failureReason = e.message;
 		console.error(e);
@@ -16,7 +18,7 @@ export const validateConfig = (nextConfig: string):[boolean, string | null] => {
 	return [upgradeSuccess, failureReason];
 };
 
-export const sanitizeURLs = (urls : string) => {
+export const sanitizeURLs = (urls: string) => {
 	return urls
 		.split(/;/)
 		.map((url) => url.trim())
@@ -24,14 +26,14 @@ export const sanitizeURLs = (urls : string) => {
 };
 
 // Only 1 dataset url is allowed at the moment
-export const updateConfigWithExampleURL = (config: Config, urls:string []) => {
+export const updateConfigWithExampleURL = (config: Config, urls: string[]) => {
 	if (urls.length === 1) {
 		config.datasets[0].files[0].url = urls[0];
 	}
 	return config;
 };
 
-export const studyIdFetcher = async (url:string) => {
+export const studyIdFetcher = async (url: string) => {
 	try {
 		const response = await fetch(url);
 
@@ -49,4 +51,4 @@ export const studyIdFetcher = async (url:string) => {
 	}
 };
 
-export const fetcher = (url:string) => fetch(url).then((res) => res.json());
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());

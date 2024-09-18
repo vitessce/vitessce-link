@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import styles from "./ErrorDiv.module.css";
 
 interface ErrorDivProps {
-	errorMessage: string | null
+	errorMessage: string | null;
 }
-export const ErrorDiv : React.FC<ErrorDivProps> = ({ errorMessage }) => {
+export const ErrorDiv: React.FC<ErrorDivProps> = ({ errorMessage }) => {
 	if (!errorMessage) {
 		return null;
 	}

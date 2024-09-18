@@ -16,7 +16,7 @@ export const Pinpad = () => {
 	const [linkId, setLinkId] = useState<string>("");
 	const [error, setError] = useState<ErrorType>(null);
 
-	const handleKeyPress = (key:string) => {
+	const handleKeyPress = (key: string) => {
 		if (key === PINPAD_MUI_KEYS.BACKSPACE) {
 			setLinkId(() => linkId.slice(0, -1));
 		} else if (key === PINPAD_MUI_KEYS.DONE) {
@@ -38,9 +38,9 @@ export const Pinpad = () => {
 		if (linkId.length === LINK_ID_LENGTH) {
 			setError(() => null);
 			const layoutItem = exampleConfigHeadset.layout[0];
-        	if (layoutItem && layoutItem.props) {
-            	layoutItem.props.linkId = linkId; 
-        	}
+			if (layoutItem && layoutItem.props) {
+				layoutItem.props.linkId = linkId;
+			}
 			const conf = JSON.stringify(exampleConfigHeadset, null, 2);
 			const nextUrl = `data:,${encodeURIComponent(conf)}`;
 			window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;

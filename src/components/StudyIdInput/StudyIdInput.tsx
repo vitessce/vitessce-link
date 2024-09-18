@@ -1,14 +1,16 @@
-import React, {ChangeEvent} from "react";
+import React, { ChangeEvent } from "react";
 import styles from "../ConfigEditor/ConfigEditor.module.css";
 import { STUDY_ID_LENGTH } from "../../utils/constants.ts";
 
 interface StudyIdInputProps {
 	onInputError: (errorMessage: string | null) => void;
 	onInputChange: (value: string) => void;
-  }
+}
 
-  
-export const StudyIdInput : React.FC<StudyIdInputProps> = ({ onInputError, onInputChange }) => {
+export const StudyIdInput: React.FC<StudyIdInputProps> = ({
+	onInputError,
+	onInputChange,
+}) => {
 	const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		if (value.trim()?.length === STUDY_ID_LENGTH) {
