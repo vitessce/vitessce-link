@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { ErrorDiv } from "../ErrorDiv/ErrorDiv";
 
 import styles from "./Pinpad.module.css";
@@ -10,16 +10,18 @@ import {
 import { exampleConfigHeadset } from "../../utils/config-examples";
 import { PinpadKey } from "../Pinpadkey";
 
-export const Pinpad = () => {
-	const [linkId, setLinkId] = useState("");
-	const [error, setError] = useState(null);
+type ErrorType = string | null;
 
-	const handleKeyPress = (key) => {
+export const Pinpad = () => {
+	const [linkId, setLinkId] = useState<string>("");
+	const [error, setError] = useState<ErrorType>(null);
+
+	const handleKeyPress = (key:string) => {
 		if (key === PINPAD_MUI_KEYS.BACKSPACE) {
 			setLinkId(() => linkId.slice(0, -1));
 		} else if (key === PINPAD_MUI_KEYS.DONE) {
 			attemptLogin();
-		} else if (linkId.length < LINK_ID_LENGTH && !isNaN(key)) {
+		} else if (linkId.length < LINK_ID_LENGTH && !isNaN(Number(key))) {
 			setLinkId(() => linkId + key);
 		}
 	};
@@ -35,7 +37,10 @@ export const Pinpad = () => {
 		// TODO: Do we want to put other checks in place, such as matching linkId?
 		if (linkId.length === LINK_ID_LENGTH) {
 			setError(() => null);
-			exampleConfigHeadset.layout[0].props.linkId = linkId;
+			const layoutItem = exampleConfigHeadset.layout[0];
+        	if (layoutItem && layoutItem.props) {
+            	layoutItem.props.linkId = linkId; 
+        	}
 			const conf = JSON.stringify(exampleConfigHeadset, null, 2);
 			const nextUrl = `data:,${encodeURIComponent(conf)}`;
 			window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;
