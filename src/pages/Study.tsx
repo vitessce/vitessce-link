@@ -1,9 +1,9 @@
 import useSWR from "swr";
 import { useState } from "react";
 import { baseJson } from "../utils/config-examples.ts";
-import { ConfigEditor } from "../components/ConfigEditor/index.tsx";
+import { ConfigEditor } from "../components/ConfigEditor";
 import { fetcher } from "../utils/utility-functions.ts";
-import { LoadingOverlay } from "../components/LoadingOverlay/index.tsx";
+import { LoadingOverlay } from "../components/LoadingOverlay";
 import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "../utils/constants.ts";
 import { ErrorDiv } from "../components/ErrorDiv/ErrorDiv.tsx";
 

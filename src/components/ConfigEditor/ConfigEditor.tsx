@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
-import { StudyIdInput } from "../StudyIdInput/index.tsx";
+import { StudyIdInput } from "../StudyIdInput";
 import { baseJson, exampleConfigEditor } from "../../utils/config-examples.ts";
-import { ErrorDiv } from "../ErrorDiv/index.tsx";
+import { ErrorDiv } from "../ErrorDiv";
 
 import styles from "./ConfigEditor.module.css";
 
