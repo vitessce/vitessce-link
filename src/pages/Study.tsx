@@ -5,7 +5,7 @@ import { ConfigEditor } from "../components/ConfigEditor";
 import { fetcher } from "../utils/utility-functions.ts";
 import { LoadingOverlay } from "../components/LoadingOverlay";
 import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "../utils/constants.ts";
-import { ErrorDiv } from "../components/ErrorDiv/ErrorDiv.tsx";
+import { ErrorDiv } from "../components/ErrorDiv/ErrorDiv";
 
 interface ConfigData {
 	layout: { component: string; props: { linkID?: string } }[];

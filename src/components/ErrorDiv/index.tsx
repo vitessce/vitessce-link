@@ -1,1 +1,1 @@
-export { ErrorDiv } from "./ErrorDiv.js";
+export { ErrorDiv } from "./ErrorDiv";

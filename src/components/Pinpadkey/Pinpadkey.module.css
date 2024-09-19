@@ -9,6 +9,8 @@
   color: #fff;
   background-color: var(--vit-color-primary);
   border-radius: 0.35rem;
+  border-color: #fff;
+  border: none;
   cursor: pointer;
   user-select: none;
   box-sizing: border-box; 

@@ -14,30 +14,30 @@ export const PinpadKey: React.FC<PinpadKeyProps> = ({
 }) => {
 	if (pinkey === PINPAD_MUI_KEYS.BACKSPACE) {
 		return (
-			<div
+			<button
 				className={`${styles.pinLoginKey}`}
 				onClick={() => onHandleKeyPress(pinkey)}
 			>
 				<Backspace />
-			</div>
+			</button>
 		);
 	} else if (pinkey === PINPAD_MUI_KEYS.DONE) {
 		return (
-			<div
+			<button
 				className={`${styles.pinLoginKey}`}
 				onClick={() => onHandleKeyPress(pinkey)}
 			>
 				<Check />
-			</div>
+			</button>
 		);
 	} else {
 		return (
-			<div
+			<button
 				className={`${styles.pinLoginKey}`}
 				onClick={() => onHandleKeyPress(pinkey)}
 			>
 				{pinkey}
-			</div>
+			</button>
 		);
 	}
 };
