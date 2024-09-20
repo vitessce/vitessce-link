@@ -1,6 +1,6 @@
-import React from "react";
-import styles from "./navbar.module.css";
+import styles from "./Navbar.module.css";
 import { Link } from "react-router-dom";
+
 export const Navbar = () => {
 	return (
 		<nav className={styles.navbarSticky}>
@@ -10,7 +10,7 @@ export const Navbar = () => {
 						<div className={styles.logoImageDiv}>
 							<img src="/logo-v.png" alt="Logo" />
 						</div>
-						<b className={styles.navbarTitle}>Vitessce-Link</b>
+						<b className={styles.navbarTitle}>Vitessce Link</b>
 					</Link>
 				</div>
 			</div>

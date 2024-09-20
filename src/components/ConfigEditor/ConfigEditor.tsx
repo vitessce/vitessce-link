@@ -3,7 +3,7 @@ import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
 import { StudyIdInput } from "../StudyIdInput";
-import { baseJson, exampleConfig } from "../../utils/config-examples.js";
+import { baseJson, exampleConfigEditor } from "../../utils/config-examples.ts";
 import { ErrorDiv } from "../ErrorDiv";
 
 import styles from "./ConfigEditor.module.css";
@@ -14,15 +14,24 @@ import {
 	LINK_ID_ENDPOINT_URL,
 	LINK_ID_LENGTH,
 	LINK_ID_KEY,
-} from "../../utils/constants.js";
+} from "../../utils/constants.ts";
 import {
 	validateConfig,
 	sanitizeURLs,
 	studyIdFetcher,
 	updateConfigWithExampleURL,
-} from "../../utils/utility-functions.js";
+} from "../../utils/utility-functions.ts";
 
-export const ConfigEditor = ({
+interface ConfigEditorProps {
+	pendingJson: string;
+	setPendingJson: (json: string) => void;
+	serverError: string | null;
+	setServerError: (error: string | null) => void;
+	setUrl: (url: string) => void;
+	setLinkIdInput: (linkId: string) => void;
+}
+
+export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	pendingJson,
 	setPendingJson,
 	serverError,
@@ -30,16 +39,18 @@ export const ConfigEditor = ({
 	setUrl,
 	setLinkIdInput,
 }) => {
-	const [datasetUrls, setDatasetUrls] = useState("");
-	const [generateConfigError, setGenerateConfigError] = useState(null);
-	const [studyId, setStudyId] = useState(null);
-	const [linkId, setLinkId] = useState(null);
-	const [error, setError] = useState(null);
+	const [datasetUrls, setDatasetUrls] = useState<string>("");
+	const [generateConfigError, setGenerateConfigError] = useState<string | null>(
+		null,
+	);
+	const [studyId, setStudyId] = useState<string | null>(null);
+	const [linkId, setLinkId] = useState<string | null>(null);
+	const [error, setError] = useState<string | null>(null);
 
 	const linkIdUrl = studyId ? `${LINK_ID_ENDPOINT_URL}${studyId}` : null;
-	const showReset = Boolean(datasetUrls)
+	const showReset = Boolean(datasetUrls);
 
-	function handleGetLinkId(studyId) {
+	function handleGetLinkId(studyId: string) {
 		setStudyId(studyId);
 	}
 
@@ -51,12 +62,11 @@ export const ConfigEditor = ({
 			if (data && data[LINK_ID_KEY]) {
 				setLinkId(data[LINK_ID_KEY]);
 			}
-			setServerError(null)
+			setServerError(null);
 		},
 	});
 
-	
-	function handleInputError(errMessage) {
+	function handleInputError(errMessage: string | null) {
 		setError(errMessage);
 	}
 
@@ -82,7 +92,7 @@ export const ConfigEditor = ({
 		}
 	}
 
-	function handleConfigGeneration(url) {
+	function handleConfigGeneration(url: string) {
 		setDatasetUrls(() => url);
 		setGenerateConfigError(() => null);
 		setError(() => null);
@@ -98,26 +108,28 @@ export const ConfigEditor = ({
 		try {
 			getHintOptions(sanitizedUrls);
 			const configJson = updateConfigWithExampleURL(
-				exampleConfig,
+				exampleConfigEditor,
 				sanitizedUrls,
 			);
-			setPendingJson(() => JSON.stringify(configJson, null, 2));
-		} catch (e) {
+			setPendingJson(JSON.stringify(configJson, null, 2));
+		} catch (e: any) {
 			setGenerateConfigError(e.message);
 			throw e;
 		}
 	}
 
 	function resetEditor() {
-		setPendingJson(() => baseJson);
-		setDatasetUrls(() => "");
+		setPendingJson(JSON.stringify(baseJson, null, 2));
+		setDatasetUrls("");
 	}
 
 	return (
 		<main className={styles.viewConfigEditorMain}>
 			<div className={styles.mainContainer}>
 				<div>
-					<ErrorDiv errorMessage={error ?? generateConfigError ?? serverError} />
+					<ErrorDiv
+						errorMessage={error ?? generateConfigError ?? serverError}
+					/>
 					<div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}
@@ -145,7 +157,6 @@ export const ConfigEditor = ({
 							)}
 						</p>
 						<textarea
-							type="text"
 							className={styles.viewConfigUrlTextarea}
 							placeholder="One file URL"
 							value={datasetUrls}
