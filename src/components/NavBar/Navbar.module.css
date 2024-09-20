@@ -29,7 +29,7 @@
 }
 
 .navbarItems a:hover {
-  color: var(--vit-color-primary)
+  color: var(  --ifm-color-primary)
 }
 
 .navbarLogo {

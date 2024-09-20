@@ -55,8 +55,8 @@
 }
 
 .viewConfigGo {
-  border: 0.125rem solid var(--vit-color-primary);
-  background-color: var(--vit-color-primary);
+  border: 0.125rem solid var(  --ifm-color-primary);
+  background-color: var(  --ifm-color-primary);
   text-decoration: none !important;
   text-transform: uppercase;
   border-radius: 0.5rem;

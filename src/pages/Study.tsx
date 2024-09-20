@@ -1,12 +1,12 @@
 import useSWR from "swr";
 import { useState } from "react";
-import { baseJson } from "../utils/config-examples.ts";
-import { ConfigEditor } from "../components/ConfigEditor";
-import { fetcher } from "../utils/utility-functions.ts";
-import { LoadingOverlay } from "../components/LoadingOverlay";
-import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "../utils/constants.ts";
-import { ErrorDiv } from "../components/ErrorDiv/ErrorDiv";
-
+import { baseJson } from "./../utils/config-examples";
+import { ConfigEditor } from "./../components/ConfigEditor";
+import { fetcher } from "./../utils/utility-functions";
+import { LoadingOverlay } from "./../components/LoadingOverlay";
+import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "./../utils/constants";
+import { ErrorDiv } from "./../components/ErrorDiv/ErrorDiv";
+import Layout from '@theme/Layout';
 interface ConfigData {
 	layout: { component: string; props: { linkID?: string } }[];
 }
@@ -58,7 +58,7 @@ export default function Study() {
 	}
 
 	return (
-		<>
+		<Layout>
 			{error && <ErrorDiv errorMessage={error} />}
 			<ConfigEditor
 				pendingJson={pendingJson}
@@ -68,6 +68,6 @@ export default function Study() {
 				setUrl={setUrlFromEditor}
 				setLinkIdInput={setLinkId}
 			/>
-		</>
+		</Layout>
 	);
 }
