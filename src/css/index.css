@@ -38,10 +38,8 @@ body {
   --ifm-color-primary-lighter: rgb(102, 212, 189);
   --ifm-color-primary-lightest: rgb(146, 224, 208);
   --ifm-code-font-size: 95%;
-
   --ifm-navbar-height: 3.0rem;
   --ifm-vitessce-toolbar-height: 28px;
-
   --vit-input-foreground: #0451a5;
   --vit-input-background: #ffffff;
   --dropzone: #989898;
@@ -57,4 +55,9 @@ body {
   --dropzone: #5f5f60;
   --code-block-background: rgb(40, 42, 54);
   --docusaurus-highlighted-code-line-bg: rgba(66, 66, 66, 0.35);
+}
+
+article p svg.custom-svg {
+  display: inline-block;
+
 }

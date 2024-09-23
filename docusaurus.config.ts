@@ -48,15 +48,6 @@ const config: Config = {
         alt: 'Vitessce Logo',
         src: 'logo-v.png',
       },
-      // {
-      //   title: 'Docs',
-      //   items: [
-      //     {
-      //       label: 'Tutorial',
-      //       to: '/docs/intro',
-      //     },
-      //   ],
-      // },
       items: [
         // { to: '/', label: 'Home', position: 'left' },  
         { to: '/study', label: 'Beta', position: 'left' },

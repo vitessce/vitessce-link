@@ -5,7 +5,7 @@ Vitessce-Link provides an interface to experience [Vitessce](https://github.com/
 `Install pnpm` following these [instructions](https://pnpm.io/installation) and `cd` into the the project directory
 ```
     pnpm install
-    pnpm run dev
+    pnpm start
 
 ```
 
@@ -16,5 +16,5 @@ Project uses [biome](https://biomejs.dev/) for linting.
 ```
 ### Deployment
 ```
-    npm run build
+    pnpm build
 ```
