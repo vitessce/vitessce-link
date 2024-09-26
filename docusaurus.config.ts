@@ -48,9 +48,8 @@ const config: Config = {
         alt: 'Vitessce Logo',
         src: 'logo-v.png',
       },
-      items: [
-        // { to: '/', label: 'Home', position: 'left' },  
-        { to: '/study', label: 'Beta', position: 'left' },
+      items: [ 
+        { to: '/beta', label: 'Beta', position: 'left' },
         { to: '/docs/guide', label: 'Docs', position: 'left' }, 
         {
           href: 'https://github.com/vitessce/vitessce-link/',
