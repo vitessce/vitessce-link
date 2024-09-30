@@ -8,7 +8,7 @@ import {
 	VITESSCE_LINK_SITE,
 	PAD_LAYOUT
 } from "../../utils/constants";
-import { exampleConfigHeadset } from "../../utils/config-examples";
+import {exampleConfigEditor, exampleConfigHeadset} from "../../utils/config-examples";
 import { PinpadKey } from "../Pinpadkey";
 
 type ErrorType = string | null;
@@ -25,20 +25,24 @@ export const Pinpad = () => {
 	}, [linkId]);
 
 	const attemptLogin = useCallback(() => {
+		console.log(linkId.length)
 		if (linkId.length === LINK_ID_LENGTH) {
 			setError(null);
-			const layoutItem = exampleConfigHeadset.layout[0];
+			let configuration = exampleConfigHeadset;
+			const layoutItem = configuration.layout[0];
 			if (layoutItem && layoutItem.props) {
-				layoutItem.props.linkId = linkId;
+				layoutItem.props.linkID = linkId;
 			}
-			const conf = JSON.stringify(exampleConfigHeadset, null, 2);
+			configuration.layout[0] = layoutItem
+			console.log(configuration)
+			const conf = JSON.stringify(configuration, null, 2);
 			const nextUrl = `data:,${encodeURIComponent(conf)}`;
 			window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;
 		} else {
 			setError("Enter a valid Link ID");
 		}
-	}, []);
-	  
+	}, [linkId]);
+
 	  const handleKeyPress = useCallback((key: string) => {
 		if (key === PINPAD_MUI_KEYS.DONE) {
 		  attemptLogin();
@@ -53,7 +57,7 @@ export const Pinpad = () => {
 			return prevLinkId;
 		  });
 		}
-	  }, [attemptLogin]); 
+	  }, [attemptLogin]);
 
 	return (
 		<main className={styles.pinLoginContainer}>
