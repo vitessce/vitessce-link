@@ -20,4 +20,4 @@ playwright/.cache/
 venv/
 .vite/
 .docusaurus/
-
+/build

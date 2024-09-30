@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { ErrorDiv } from "../ErrorDiv/ErrorDiv";
+import { ErrorDiv } from "../ErrorDiv";
 
 import styles from "./Pinpad.module.css";
 import {
@@ -8,7 +8,7 @@ import {
 	VITESSCE_LINK_SITE,
 	PAD_LAYOUT
 } from "../../utils/constants";
-import {exampleConfigEditor, exampleConfigHeadset} from "../../utils/config-examples";
+import {exampleConfigHeadset} from "../../utils/config-examples";
 import { PinpadKey } from "../Pinpadkey";
 
 type ErrorType = string | null;
