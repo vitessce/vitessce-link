@@ -23,7 +23,7 @@ export const PINPAD_MUI_KEYS: { BACKSPACE: string; DONE: string } = {
 	DONE: "done",
 };
 
-export 	const PAD_LAYOUT = [
+export const PAD_LAYOUT = [
 	"1",
 	"2",
 	"3",

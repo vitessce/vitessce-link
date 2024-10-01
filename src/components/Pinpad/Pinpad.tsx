@@ -6,9 +6,9 @@ import {
 	PINPAD_MUI_KEYS,
 	LINK_ID_LENGTH,
 	VITESSCE_LINK_SITE,
-	PAD_LAYOUT
+	PAD_LAYOUT,
 } from "../../utils/constants";
-import {exampleConfigHeadset} from "../../utils/config-examples";
+import { exampleConfigHeadset } from "../../utils/config-examples";
 import { PinpadKey } from "../Pinpadkey";
 
 type ErrorType = string | null;
@@ -25,7 +25,7 @@ export const Pinpad = () => {
 	}, [linkId]);
 
 	const attemptLogin = useCallback(() => {
-		console.log(linkId.length)
+		// console.log(linkId.length);
 		if (linkId.length === LINK_ID_LENGTH) {
 			setError(null);
 			let configuration = exampleConfigHeadset;
@@ -33,8 +33,8 @@ export const Pinpad = () => {
 			if (layoutItem && layoutItem.props) {
 				layoutItem.props.linkID = linkId;
 			}
-			configuration.layout[0] = layoutItem
-			console.log(configuration)
+			configuration.layout[0] = layoutItem;
+			// console.log(configuration);
 			const conf = JSON.stringify(configuration, null, 2);
 			const nextUrl = `data:,${encodeURIComponent(conf)}`;
 			window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;
@@ -43,21 +43,24 @@ export const Pinpad = () => {
 		}
 	}, [linkId]);
 
-	  const handleKeyPress = useCallback((key: string) => {
-		if (key === PINPAD_MUI_KEYS.DONE) {
-		  attemptLogin();
-		} else {
-		  setLinkId((prevLinkId) => {
-			if (key === PINPAD_MUI_KEYS.BACKSPACE) {
-			  return prevLinkId.slice(0, -1);
+	const handleKeyPress = useCallback(
+		(key: string) => {
+			if (key === PINPAD_MUI_KEYS.DONE) {
+				attemptLogin();
+			} else {
+				setLinkId((prevLinkId) => {
+					if (key === PINPAD_MUI_KEYS.BACKSPACE) {
+						return prevLinkId.slice(0, -1);
+					}
+					if (prevLinkId.length < LINK_ID_LENGTH && !isNaN(Number(key))) {
+						return prevLinkId + key;
+					}
+					return prevLinkId;
+				});
 			}
-			if (prevLinkId.length < LINK_ID_LENGTH && !isNaN(Number(key))) {
-			  return prevLinkId + key;
-			}
-			return prevLinkId;
-		  });
-		}
-	  }, [attemptLogin]);
+		},
+		[attemptLogin],
+	);
 
 	return (
 		<main className={styles.pinLoginContainer}>

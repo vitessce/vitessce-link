@@ -1,17 +1,26 @@
 import useSWR from "swr";
-import { useState } from "react";
-import { baseJson } from "./../utils/config-examples";
-import { ConfigEditor } from "../components/ConfigEditor";
-import { fetcher } from "./../utils/utility-functions";
+import React, { useState, useEffect, Suspense } from "react";
+import { baseJson } from "../utils/config-examples";
+import { fetcher } from "../utils/utility-functions";
 import { LoadingOverlay } from "../components/LoadingOverlay";
-import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "./../utils/constants";
+import { ERROR_MESSAGES, VITESSCE_LINK_SITE } from "../utils/constants";
 import { ErrorDiv } from "../components/ErrorDiv";
-import Layout from '@theme/Layout';
+import useIsBrowser from "@docusaurus/useIsBrowser";
+import Layout from "@theme/Layout";
+
+const ConfigEditor = React.lazy(() =>
+	import("../components/ConfigEditor").then((module) => ({
+		default: module.ConfigEditor,
+	})),
+);
+
 interface ConfigData {
 	layout: { component: string; props: { linkID?: string } }[];
 }
 
-export default function Study() {
+export default function BetaIndex() {
+	const isBrowser = useIsBrowser();
+
 	const [serverError, setServerError] = useState<string | null>(null);
 	const [pendingJson, setPendingJson] = useState<string>(
 		JSON.stringify(baseJson, null, 2),
@@ -25,29 +34,41 @@ export default function Study() {
 		isValidating,
 		isLoading,
 		error: swrError,
-	} = useSWR<ConfigData | null>(url, fetcher);
+	} = useSWR<ConfigData | null>(isBrowser ? url : null, fetcher);
 
-	if (swrError) {
-		setServerError(swrError.message);
-	}
-	if (configData) {
-		const linkControllerIndex = configData?.layout.findIndex(
-			(comp) => comp.component === "linkController",
-		);
-		if (linkControllerIndex > -1) {
-			try {
-				configData.layout[linkControllerIndex].props.linkID =
-					linkId || undefined;
-				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
-				const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
-				window.location.href = vitessceLink;
-			} catch {
+	useEffect(() => {
+		if (isBrowser && swrError) {
+			setServerError(swrError.message);
+		}
+	}, [swrError, isBrowser]);
+
+	function handleClientSideNavigation() {
+		if (configData) {
+			const linkControllerIndex = configData?.layout.findIndex(
+				(comp) => comp.component === "linkController",
+			);
+			if (linkControllerIndex > -1) {
+				try {
+					configData.layout[linkControllerIndex].props.linkID =
+						linkId || undefined;
+					const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
+					const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
+
+					window.location.href = vitessceLink;
+				} catch {
+					setError(ERROR_MESSAGES.INVALID_CONFIG);
+				}
+			} else {
 				setError(ERROR_MESSAGES.INVALID_CONFIG);
 			}
-		} else {
-			setError(ERROR_MESSAGES.INVALID_CONFIG);
 		}
 	}
+
+	useEffect(() => {
+		if (isBrowser && configData) {
+			handleClientSideNavigation();
+		}
+	}, [configData, linkId, isBrowser]);
 
 	function setUrlFromEditor(nextUrl: string) {
 		setUrl(nextUrl);
@@ -60,14 +81,19 @@ export default function Study() {
 	return (
 		<Layout>
 			{error && <ErrorDiv errorMessage={error} />}
-			<ConfigEditor
-				pendingJson={pendingJson}
-				setPendingJson={setPendingJson}
-				serverError={serverError}
-				setServerError={setServerError}
-				setUrl={setUrlFromEditor}
-				setLinkIdInput={setLinkId}
-			/>
+
+			<Suspense fallback={<LoadingOverlay isLoading={true} />}>
+				{isBrowser && (
+					<ConfigEditor
+						pendingJson={pendingJson}
+						setPendingJson={setPendingJson}
+						serverError={serverError}
+						setServerError={setServerError}
+						setUrl={setUrlFromEditor}
+						setLinkIdInput={setLinkId}
+					/>
+				)}
+			</Suspense>
 		</Layout>
 	);
 }
