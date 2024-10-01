@@ -1,0 +1,1 @@
+import{w as f}from"./index-HQAUyk1K.js";class c extends f{decodeBlock(s){const o=new DataView(s),n=[];for(let e=0;e<s.byteLength;++e){let t=o.getInt8(e);if(t<0){const r=o.getUint8(e+1);t=-t;for(let a=0;a<=t;++a)n.push(r);e+=1}else{for(let r=0;r<=t;++r)n.push(o.getUint8(e+r+1));e+=t+1}}return new Uint8Array(n).buffer}}export{c as default};

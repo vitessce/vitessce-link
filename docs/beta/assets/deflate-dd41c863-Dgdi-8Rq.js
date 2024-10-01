@@ -1,1 +1,0 @@
-import{b as e}from"./pako.esm-a0be47a3-uimzD4ZM.js";import{w as o}from"./index-BNVOFeHs.js";class d extends o{decodeBlock(r){return e(new Uint8Array(r)).buffer}}export{d as default};

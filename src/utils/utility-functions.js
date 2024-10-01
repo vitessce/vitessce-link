@@ -26,6 +26,7 @@ export const sanitizeURLs = (urls) => {
 export const updateConfigWithExampleURL = (config, urls) => {
 	if (urls.length === 1) {
 		config.datasets[0].files[0].url = urls[0];
+		config.datasets[0].files[0].options = { "offsetsUrl" : urls[0].split(".ome.")[0] + ".offsets.json"}
 	}
 	return config;
 };
