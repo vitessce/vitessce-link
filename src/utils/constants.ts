@@ -7,7 +7,7 @@ export const LINK_ID_ENDPOINT_URL: string =
 	"https://mr-study.vitessce.io/link?study_id=";
 
 export const EXAMPLE_URL: string =
-	"https://assets.hubmapconsortium.org/a4be39d9c1606130450a011d2f1feeff/ometiff-pyramids/processedMicroscopy/VAN0012-RK-102-167-PAS_IMS_images/VAN0012-RK-102-167-PAS_IMS-registered.ome.tif";
+	"https://data-2.vitessce.io/data/redBloodCell.ome.tiff";
 
 export const ERROR_MESSAGES: { [key: string]: string } = {
 	INVALID_STUDY_ID: "Team ID is not valid",
@@ -23,7 +23,7 @@ export const PINPAD_MUI_KEYS: { BACKSPACE: string; DONE: string } = {
 	DONE: "done",
 };
 
-export 	const PAD_LAYOUT = [
+export const PAD_LAYOUT = [
 	"1",
 	"2",
 	"3",

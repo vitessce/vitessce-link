@@ -5,6 +5,7 @@ export interface CoordinationSpace {
 export interface File {
 	fileType: string;
 	url: string;
+	options?: { [key: string]: string };
 	coordinationValues: { [key: string]: string };
 }
 
@@ -56,6 +57,10 @@ export const exampleConfigEditor: Config = {
 				{
 					fileType: "image.ome-tiff",
 					url: "https://data-2.vitessce.io/data/redBloodCell.ome.tiff",
+					options: {
+						offsetsUrl:
+							"https://data-2.vitessce.io/data/redBloodCell.offsets.json",
+					},
 					coordinationValues: {
 						fileUid: "file",
 					},
@@ -200,6 +205,10 @@ export const exampleConfigHeadset: Config = {
 				{
 					fileType: "image.ome-tiff",
 					url: "https://data-2.vitessce.io/data/redBloodCell.ome.tiff",
+					options: {
+						offsetsUrl:
+							"https://data-2.vitessce.io/data/redBloodCell.offsets.json",
+					},
 					coordinationValues: {
 						fileUid: "file",
 					},

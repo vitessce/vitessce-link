@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
-import { StudyIdInput } from "../StudyIdInput";
-import { baseJson, exampleConfigEditor } from "../../utils/config-examples.ts";
-import { ErrorDiv } from "../ErrorDiv";
+import { StudyIdInput } from "./../StudyIdInput";
+import { baseJson, exampleConfigEditor } from "../../utils/config-examples";
+import { ErrorDiv } from "./../ErrorDiv";
 
 import styles from "./ConfigEditor.module.css";
 
@@ -14,13 +14,13 @@ import {
 	LINK_ID_ENDPOINT_URL,
 	LINK_ID_LENGTH,
 	LINK_ID_KEY,
-} from "../../utils/constants.ts";
+} from "../../utils/constants";
 import {
 	validateConfig,
 	sanitizeURLs,
 	studyIdFetcher,
 	updateConfigWithExampleURL,
-} from "../../utils/utility-functions.ts";
+} from "../../utils/utility-functions";
 
 interface ConfigEditorProps {
 	pendingJson: string;
