@@ -25,16 +25,12 @@ export const Pinpad = () => {
 	}, [linkId]);
 
 	const attemptLogin = useCallback(() => {
-		// console.log(linkId.length);
 		if (linkId.length === LINK_ID_LENGTH) {
 			setError(null);
 			let configuration = exampleConfigHeadset;
-			const layoutItem = configuration.layout[0];
-			if (layoutItem && layoutItem.props) {
-				layoutItem.props.linkID = linkId;
+			if (configuration?.layout?.length > 0 && configuration.layout[0]?.props) {
+				configuration.layout[0].props.linkID = linkId;
 			}
-			configuration.layout[0] = layoutItem;
-			// console.log(configuration);
 			const conf = JSON.stringify(configuration, null, 2);
 			const nextUrl = `data:,${encodeURIComponent(conf)}`;
 			window.location.href = `${VITESSCE_LINK_SITE}${nextUrl}`;
