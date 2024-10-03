@@ -5,7 +5,7 @@ sidebar_position: 3
 
 # Vitessce Link Tutorial with Sample Dataset
 
-To load a 3D dataset first go to [vitessce.link/study](file:///Users/ericmoerth/Library/CloudStorage/GoogleDrive-eric.moerth@gmx.at/My%20Drive/HARVARD%20MEDICAL%20SCHOOL/Reviews/BioMedVis2024/vitessce.link/study) on your Desktop   
+To load a 3D dataset first go to [vitessce.link/beta](/beta) on your Desktop 
 ![A screenshot of the Beta Page](./assets/images/betapage.png)
 
 1) Enter your Team ID  
