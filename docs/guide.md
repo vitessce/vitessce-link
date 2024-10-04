@@ -10,8 +10,6 @@ This detailed guide is intended to help provide additional resources for the use
 
 The Vitessce Link software is in-progress, and we will continue to develop and release additional features throughout the 12 month Beta period\!
 
-**If you have any questions about the Vitessce Link software or setting up your Meta Quest 3** please contact:
+**If you have any questions about the Vitessce Link software or setting up your Meta Quest 3** 
 
-[hidive@hms.harvard.edu](mailto:hidive@hms.harvard.edu)            
-**Subject**: Vitessce Link
-
+please contact <a href="mailto:hidive@hms.harvard.edu?subject=Vitessce Link">hidive@hms.harvard.edu</a>  
