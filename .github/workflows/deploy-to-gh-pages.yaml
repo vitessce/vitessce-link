@@ -5,7 +5,7 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "main" , "tkakar/cat-936-gh-pages-deploy"]
+    branches: ["tkakar/cat-936-gh-pages-deploy"]
 
 jobs:
   build:
@@ -33,6 +33,6 @@ jobs:
     - name: Deploy with gh-pages
       run: |
         git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        pnpm run deploy "github-actions-bot <support+actions@github.com>"
+        npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

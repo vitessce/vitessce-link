@@ -26,7 +26,7 @@
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "deploy": "docusaurus deploy"
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
