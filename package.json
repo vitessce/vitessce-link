@@ -25,7 +25,7 @@
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
-    "deploy": "docusaurus deploy"
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [
@@ -42,6 +42,7 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "@vitejs/plugin-react": "^4.3.1",
+    "gh-pages": "^6.1.1",
     "typescript": "^5.6.2",
     "vite": "^5.4.1"
   }
