@@ -50,6 +50,7 @@ const config: Config = {
       },
       items: [ 
         { to: '/beta', label: 'Beta', position: 'left' },
+        { to: '/lounge', label: 'Lounge', position: 'left' },
         { to: '/docs/guide', label: 'Docs', position: 'left' }, 
         {
           href: 'https://github.com/vitessce/vitessce-link/',

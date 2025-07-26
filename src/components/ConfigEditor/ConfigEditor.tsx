@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useSWR from "swr";
 import { getHintOptions } from "vitessce";
 
@@ -29,6 +29,7 @@ interface ConfigEditorProps {
 	setServerError: (error: string | null) => void;
 	setUrl: (url: string) => void;
 	setLinkIdInput: (linkId: string) => void;
+	loungeId: string | null;
 }
 
 export const ConfigEditor: React.FC<ConfigEditorProps> = ({
@@ -38,6 +39,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	setServerError,
 	setUrl,
 	setLinkIdInput,
+	loungeId = null,
 }) => {
 	const [datasetUrls, setDatasetUrls] = useState<string>("");
 	const [generateConfigError, setGenerateConfigError] = useState<string | null>(
@@ -54,6 +56,12 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 		setStudyId(studyId);
 	}
 
+	useEffect(() => {
+		if (!linkId && isValidLoungeEntry()) {
+			setLinkId(loungeId)
+		}
+	}, [loungeId, linkId])
+
 	useSWR(linkIdUrl, studyIdFetcher, {
 		onError: (err) => {
 			setServerError(err.message);
@@ -68,6 +76,11 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 
 	function handleInputError(errMessage: string | null) {
 		setError(errMessage);
+	}
+	function isValidLoungeEntry(){
+		if (loungeId?.length === LINK_ID_LENGTH)
+			return true;
+		return false
 	}
 
 	async function handleLaunch() {
@@ -130,12 +143,13 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 					<ErrorDiv
 						errorMessage={error ?? generateConfigError ?? serverError}
 					/>
-					<div className={styles.containerRow}>
+					{!isValidLoungeEntry() && <div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}
 							onInputChange={handleGetLinkId}
 						/>
 					</div>
+					}
 					<div className={styles.containerRow}>
 						<p className={styles.viewConfigInputUrlOrFileText}>
 							Enter the URL to a data file.
