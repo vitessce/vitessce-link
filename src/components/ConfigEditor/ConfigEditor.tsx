@@ -29,7 +29,7 @@ interface ConfigEditorProps {
 	setServerError: (error: string | null) => void;
 	setUrl: (url: string) => void;
 	setLinkIdInput: (linkId: string) => void;
-	launchId: string | null;
+	launchTeamId: string | null;
 }
 
 export const ConfigEditor: React.FC<ConfigEditorProps> = ({
@@ -39,7 +39,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	setServerError,
 	setUrl,
 	setLinkIdInput,
-	launchId = null,
+	launchTeamId = null,
 }) => {
 	const [datasetUrls, setDatasetUrls] = useState<string>("");
 	const [generateConfigError, setGenerateConfigError] = useState<string | null>(
@@ -58,9 +58,9 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 
 	useEffect(() => {
 		if (!linkId && isValidLaunchEntry()) {
-			setLinkId(launchId)
+			setLinkId(launchTeamId);
 		}
-	}, [launchId, linkId])
+	}, [launchTeamId, linkId]);
 
 	useSWR(linkIdUrl, studyIdFetcher, {
 		onError: (err) => {
@@ -77,10 +77,9 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	function handleInputError(errMessage: string | null) {
 		setError(errMessage);
 	}
-	function isValidLaunchEntry(){
-		if (launchId?.length === LINK_ID_LENGTH)
-			return true;
-		return false
+	function isValidLaunchEntry() {
+		if (launchTeamId?.length === LINK_ID_LENGTH) return true;
+		return false;
 	}
 
 	async function handleLaunch() {
@@ -143,13 +142,14 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 					<ErrorDiv
 						errorMessage={error ?? generateConfigError ?? serverError}
 					/>
-					{!isValidLaunchEntry() && <div className={styles.containerRow}>
-						<StudyIdInput
-							onInputError={handleInputError}
-							onInputChange={handleGetLinkId}
-						/>
-					</div>
-					}
+					{!isValidLaunchEntry() && (
+						<div className={styles.containerRow}>
+							<StudyIdInput
+								onInputError={handleInputError}
+								onInputChange={handleGetLinkId}
+							/>
+						</div>
+					)}
 					<div className={styles.containerRow}>
 						<p className={styles.viewConfigInputUrlOrFileText}>
 							Enter the URL to a data file.
