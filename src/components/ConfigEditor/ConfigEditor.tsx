@@ -29,7 +29,7 @@ interface ConfigEditorProps {
 	setServerError: (error: string | null) => void;
 	setUrl: (url: string) => void;
 	setLinkIdInput: (linkId: string) => void;
-	loungeId: string | null;
+	launchId: string | null;
 }
 
 export const ConfigEditor: React.FC<ConfigEditorProps> = ({
@@ -39,7 +39,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	setServerError,
 	setUrl,
 	setLinkIdInput,
-	loungeId = null,
+	launchId = null,
 }) => {
 	const [datasetUrls, setDatasetUrls] = useState<string>("");
 	const [generateConfigError, setGenerateConfigError] = useState<string | null>(
@@ -57,10 +57,10 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	}
 
 	useEffect(() => {
-		if (!linkId && isValidLoungeEntry()) {
-			setLinkId(loungeId)
+		if (!linkId && isValidLaunchEntry()) {
+			setLinkId(launchId)
 		}
-	}, [loungeId, linkId])
+	}, [launchId, linkId])
 
 	useSWR(linkIdUrl, studyIdFetcher, {
 		onError: (err) => {
@@ -77,8 +77,8 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 	function handleInputError(errMessage: string | null) {
 		setError(errMessage);
 	}
-	function isValidLoungeEntry(){
-		if (loungeId?.length === LINK_ID_LENGTH)
+	function isValidLaunchEntry(){
+		if (launchId?.length === LINK_ID_LENGTH)
 			return true;
 		return false
 	}
@@ -143,7 +143,7 @@ export const ConfigEditor: React.FC<ConfigEditorProps> = ({
 					<ErrorDiv
 						errorMessage={error ?? generateConfigError ?? serverError}
 					/>
-					{!isValidLoungeEntry() && <div className={styles.containerRow}>
+					{!isValidLaunchEntry() && <div className={styles.containerRow}>
 						<StudyIdInput
 							onInputError={handleInputError}
 							onInputChange={handleGetLinkId}

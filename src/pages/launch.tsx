@@ -8,7 +8,7 @@ import { ErrorDiv } from "../components/ErrorDiv";
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import Layout from "@theme/Layout";
 
-const LOUNGE_TEAM_ID = '6761';
+const LAUNCH_TEAM_ID = '2373';
 /* Docusaurus build does not work for server side code, so delaying that until in Browser, hence the changes */
 
 const ConfigEditor = React.lazy(() =>
@@ -21,7 +21,7 @@ interface ConfigData {
 	layout: { component: string; props: { linkID?: string } }[];
 }
 
-export default function Lounge() {
+export default function Launch() {
 	const isBrowser = useIsBrowser();
 
 	const [serverError, setServerError] = useState<string | null>(null);
@@ -78,7 +78,7 @@ export default function Lounge() {
 			<Suspense fallback={<LoadingOverlay isLoading={true} />}>
 				{isBrowser && (
 					<ConfigEditor
-						loungeId = { LOUNGE_TEAM_ID }
+						launchId = { LAUNCH_TEAM_ID }
 						pendingJson={pendingJson}
 						setPendingJson={setPendingJson}
 						serverError={serverError}
