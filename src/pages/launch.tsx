@@ -1,10 +1,12 @@
 import Layout from "@theme/Layout";
 import { PageContent } from "../components/PageContent";
 
-export default function Beta() {
+const LAUNCH_TEAM_ID = "2373";
+
+export default function Launch() {
 	return (
 		<Layout>
-			<PageContent launchTeamId={null} />
+			<PageContent launchTeamId={LAUNCH_TEAM_ID} />
 		</Layout>
 	);
 }
