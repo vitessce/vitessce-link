@@ -1,10 +1,10 @@
 // import { Examples } from "../components/Example";
 import Layout from "@theme/Layout";
-import {ExampleList} from "../components/ExampleList/ExampleList";
+import { ExampleList } from "../components/ExampleList/ExampleList";
 export default function Home() {
 	return (
 		<Layout>
-			<ExampleList/>
+			<ExampleList />
 		</Layout>
 	);
 }

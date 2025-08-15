@@ -51,7 +51,7 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 				// Don't add LinkId for the Launch page to sync with Vitessce
 				if (!launchTeamId) {
 					configData.layout[linkControllerIndex].props.linkID =
-					linkId || undefined;
+						linkId || undefined;
 				}
 				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
 				const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
