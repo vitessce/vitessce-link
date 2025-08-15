@@ -48,11 +48,13 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 		);
 		if (linkControllerIndex > -1) {
 			try {
-				configData.layout[linkControllerIndex].props.linkID =
+				// Don't add LinkId for the Launch page to sync with Vitessce
+				if (!launchTeamId) {
+					configData.layout[linkControllerIndex].props.linkID =
 					linkId || undefined;
+				}
 				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
 				const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
-
 				window.location.href = vitessceLink;
 			} catch {
 				setError(ERROR_MESSAGES.INVALID_CONFIG);

@@ -2,7 +2,7 @@ export const STUDY_ID_LENGTH: number = 4;
 export const LINK_ID_LENGTH: number = 4;
 export const INPUT_DEBOUNCE_SECONDS: number = 500;
 export const LINK_ID_KEY: string = "link_id";
-export const VITESSCE_LINK_SITE: string = "https://beta-mr.vitessce.io/?url=";
+export const VITESSCE_LINK_SITE: string = "https://vitessce.io/?url=";
 export const LINK_ID_ENDPOINT_URL: string =
 	"https://mr-study.vitessce.io/link?study_id=";
 

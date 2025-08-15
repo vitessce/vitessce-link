@@ -175,11 +175,6 @@ export const exampleConfigEditor: Config = {
 		},
 		{
 			component: "linkController",
-			props: {
-				linkID: 1234,
-				send: true,
-				receive: true,
-			},
 			x: 8,
 			y: 1,
 			w: 4,
