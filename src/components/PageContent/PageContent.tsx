@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { baseJson } from "../../utils/config-examples";
 import { fetcher } from "../../utils/utility-functions";
 import { LoadingOverlay } from "../LoadingOverlay";
@@ -10,26 +10,26 @@ import useIsBrowser from "@docusaurus/useIsBrowser";
 /* Docusaurus build does not work for server side code, so delaying that until in Browser, hence the changes */
 
 const ConfigEditor = React.lazy(() =>
-	import("../ConfigEditor").then((module) => ({
-		default: module.ConfigEditor,
-	})),
+  import("../ConfigEditor").then((module) => ({
+    default: module.ConfigEditor,
+  })),
 );
 
 interface PageContentProps {
-	linkID?: string;
-	launchTeamId: string | null;
+  linkID?: string;
+  launchTeamId: string | null;
 }
 
 export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
-	const isBrowser = useIsBrowser();
+  const isBrowser = useIsBrowser();
 
-	const [serverError, setServerError] = useState<string | null>(null);
-	const [pendingJson, setPendingJson] = useState<string>(
-		JSON.stringify(baseJson, null, 2),
-	);
-	const [linkId, setLinkId] = useState<string | null>(null);
-	const [url, setUrl] = useState<string | null>(null);
-	const [error, setError] = useState<string | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [pendingJson, setPendingJson] = useState<string>(
+    JSON.stringify(baseJson, null, 2),
+  );
+  const [linkId, setLinkId] = useState<string | null>(null);
+  const [url, setUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
 	const {
 		data: configData,
@@ -38,56 +38,70 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 		error: swrError,
 	} = useSWR<ConfigData | null>(url, fetcher);
 
-	if (swrError) {
-		setServerError(swrError.message);
-	}
+  useEffect(() => {
+    if (swrError) setServerError(swrError.message);
+  }, [swrError]);
 
-	if (configData) {
-		const linkControllerIndex = configData?.layout.findIndex(
-			(comp) => comp.component === "linkController",
-		);
-		if (linkControllerIndex > -1) {
-			try {
-				// Don't add LinkId for the Launch page to sync with Vitessce
-				if (!launchTeamId) {
-					configData.layout[linkControllerIndex].props.linkID =
-						linkId || undefined;
-				}
-				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
-				const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
-				window.location.href = vitessceLink;
-			} catch {
-				setError(ERROR_MESSAGES.INVALID_CONFIG);
-			}
-		} else {
-			setError(ERROR_MESSAGES.INVALID_CONFIG);
-		}
-	}
+  // 2) Redirect exactly once per valid config
+  const hasNavigatedRef = useRef(false);
 
-	function setUrlFromEditor(nextUrl: string) {
-		setUrl(nextUrl);
-	}
+  useEffect(() => {
+    if (!configData || hasNavigatedRef.current) return;
 
-	if (isLoading || isValidating) {
-		return <LoadingOverlay isLoading={isLoading || isValidating} />;
-	}
+    const linkControllerIndex = configData?.layout?.findIndex(
+      (comp) => comp.component === "linkController",
+    );
 
-	return (
-		<>
-			{error && <ErrorDiv errorMessage={error} />}
-			<Suspense fallback={<LoadingOverlay isLoading={true} />}>
-				{isBrowser && (
-					<ConfigEditor
-						launchTeamId={launchTeamId}
-						pendingJson={pendingJson}
-						setPendingJson={setPendingJson}
-						serverError={serverError}
-						setServerError={setServerError}
-						setUrl={setUrlFromEditor}
-						setLinkIdInput={setLinkId}
-					/>
-				)}
-			</Suspense>
-		</>
-	);
+    if (linkControllerIndex == null || linkControllerIndex < 0) {
+      setError(ERROR_MESSAGES.INVALID_CONFIG);
+      return;
+    }
+
+    try {
+      // clone to avoid mutating SWR's cached object
+      const cfg = JSON.parse(JSON.stringify(configData)) as ConfigData;
+
+      // Don't add LinkId for the Launch page to sync with Vitessce
+      if (!launchTeamId) {
+        if (!cfg.layout[linkControllerIndex].props) {
+          cfg.layout[linkControllerIndex].props = {};
+        }
+        cfg.layout[linkControllerIndex].props.linkID = linkId || undefined;
+      }
+
+      const nextUrl = `data:,${encodeURIComponent(JSON.stringify(cfg, null, 2))}`;
+      const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
+      hasNavigatedRef.current = true;
+      window.location.href = vitessceLink;
+    } catch {
+      setError(ERROR_MESSAGES.INVALID_CONFIG);
+    }
+  }, [configData, launchTeamId, linkId]);
+
+  function setUrlFromEditor(nextUrl: string) {
+    setUrl(nextUrl);
+  }
+
+  if (isLoading || isValidating) {
+    return <LoadingOverlay isLoading={isLoading || isValidating} />;
+  }
+
+  return (
+    <>
+      {error && <ErrorDiv errorMessage={error} />}
+      <Suspense fallback={<LoadingOverlay isLoading={true} />}>
+        {isBrowser && (
+          <ConfigEditor
+            launchTeamId={launchTeamId}
+            pendingJson={pendingJson}
+            setPendingJson={setPendingJson}
+            serverError={serverError}
+            setServerError={setServerError}
+            setUrl={setUrlFromEditor}
+            setLinkIdInput={setLinkId}
+          />
+        )}
+      </Suspense>
+    </>
+  );
 };
