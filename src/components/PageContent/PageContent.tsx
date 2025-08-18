@@ -42,7 +42,7 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 		if (swrError) setServerError(swrError.message);
 	}, [swrError]);
 
-	// 2) Redirect exactly once per valid config
+	// Redirect exactly once per valid config
 	const hasNavigatedRef = useRef(false);
 
 	useEffect(() => {
@@ -61,7 +61,7 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 			// clone to avoid mutating SWR's cached object
 			const cfg = JSON.parse(JSON.stringify(configData)) as ConfigData;
 
-			// Don't add LinkId for the Launch page to sync with Vitessce
+			// Skip adding LinkId for the Launch page to sync with Vitessce
 			if (!launchTeamId) {
 				if (!cfg.layout[linkControllerIndex].props) {
 					cfg.layout[linkControllerIndex].props = {};
