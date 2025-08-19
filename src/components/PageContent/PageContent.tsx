@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { baseJson } from "../../utils/config-examples";
 import { fetcher } from "../../utils/utility-functions";
 import { LoadingOverlay } from "../LoadingOverlay";
@@ -38,29 +38,45 @@ export const PageContent: React.FC<PageContentProps> = ({ launchTeamId }) => {
 		error: swrError,
 	} = useSWR<ConfigData | null>(url, fetcher);
 
-	if (swrError) {
-		setServerError(swrError.message);
-	}
+	useEffect(() => {
+		if (swrError) setServerError(swrError.message);
+	}, [swrError]);
 
-	if (configData) {
-		const linkControllerIndex = configData?.layout.findIndex(
+	// Redirect exactly once per valid config
+	const hasNavigatedRef = useRef(false);
+
+	useEffect(() => {
+		if (!configData || hasNavigatedRef.current) return;
+
+		const linkControllerIndex = configData?.layout?.findIndex(
 			(comp) => comp.component === "linkController",
 		);
-		if (linkControllerIndex > -1) {
-			try {
-				configData.layout[linkControllerIndex].props.linkID =
-					linkId || undefined;
-				const nextUrl = `data:,${encodeURIComponent(JSON.stringify(configData, null, 2))}`;
-				const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
 
-				window.location.href = vitessceLink;
-			} catch {
-				setError(ERROR_MESSAGES.INVALID_CONFIG);
+		if (linkControllerIndex == null || linkControllerIndex < 0) {
+			setError(ERROR_MESSAGES.INVALID_CONFIG);
+			return;
+		}
+
+		try {
+			// clone to avoid mutating SWR's cached object
+			const cfg = JSON.parse(JSON.stringify(configData)) as ConfigData;
+
+			// Skip adding LinkId for the Launch page to sync with Vitessce
+			if (!launchTeamId) {
+				if (!cfg.layout[linkControllerIndex].props) {
+					cfg.layout[linkControllerIndex].props = {};
+				}
+				cfg.layout[linkControllerIndex].props.linkID = linkId || undefined;
 			}
-		} else {
+
+			const nextUrl = `data:,${encodeURIComponent(JSON.stringify(cfg, null, 2))}`;
+			const vitessceLink = `${VITESSCE_LINK_SITE}${nextUrl}`;
+			hasNavigatedRef.current = true;
+			window.location.href = vitessceLink;
+		} catch {
 			setError(ERROR_MESSAGES.INVALID_CONFIG);
 		}
-	}
+	}, [configData, launchTeamId, linkId]);
 
 	function setUrlFromEditor(nextUrl: string) {
 		setUrl(nextUrl);
