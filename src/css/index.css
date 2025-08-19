@@ -37,3 +37,21 @@ article p svg.custom-svg {
   display: inline-block;
 
 }
+
+.betaDescriptionContainer {
+  display: flex; 
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+  margin: 0 auto;
+  text-align: center;  
+  padding: 2.5rem 2.5rem 0 2.5rem;
+}
+.betaDescriptionContainer p {
+  text-align: center;
+}
+
+.links {
+  color: --ifm-color-primary
+}

@@ -1,21 +1,16 @@
 import Layout from "@theme/Layout";
 import { PageContent } from "../components/PageContent";
-import clsx from "clsx";
-
-import styles from "../components/ExampleList/ExampleList.module.css";
-
+import "../css/index.css";
 export default function Beta() {
 	return (
 		<Layout>
-			<p
-				className={clsx(styles.demoDescription, {
-					[styles.demoDescriptionSmall]: false,
-				})}
-			>
-				Our beta program provides early access to new features as they become
-				available. Participants are encouraged to provide feedback and can
-				contact us to join.
-			</p>
+			<div className="betaDescriptionContainer">
+				<p>
+					Our beta program provides early access to new features as they become
+					available. Participants are encouraged to provide feedback and can
+					<a href="https://hidivelab.org/contact/" className="links" target="_blank"> contact us </a>to join.
+				</p>
+			</div>
 			<PageContent launchTeamId={null} />
 		</Layout>
 	);
