@@ -59,7 +59,7 @@ export const ExampleList = () => {
 					[styles.demoDescriptionSmall]: small,
 				})}
 			>
-				The demos compiled here showcase the core features of VitessceLink.
+				The demos compiled here showcase the core features of Vitessce Link.
 			</p>
 			<div
 				className={clsx(styles.demoGridContainer, {
