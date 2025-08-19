@@ -6,6 +6,8 @@ on:
 
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-22.04
     strategy:
       matrix:
@@ -29,7 +31,9 @@ jobs:
 
     - name: Deploy with gh-pages
       run: |
-        git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
-        npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
+        git config user.name "github-actions[bot]"
+        git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        pnpm run deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
