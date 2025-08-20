@@ -6,9 +6,9 @@ import styles from "./ExampleList.module.css";
 type configAttrsType = Record<string, string[]>;
 
 const configAttrs: configAttrsType = {
-	"clarence-1": ["imaging", "spatial"],
-	"clarence-2": ["imaging", "spatial"],
-	"mclaughin-2025": ["imaging", "spatial"],
+	"clarence-1": ["imaging", "spatial", "3D", "ome-tiff", "scalability", "multi-modal"],
+	"clarence-2": ["imaging", "spatial",  "ome-tiff", "scalability", "multi-modal"],
+	"mclaughin-2025": ["imaging", "spatial",  "ome-tiff", "scalability", "multi-modal"],
 };
 
 type Example = {
