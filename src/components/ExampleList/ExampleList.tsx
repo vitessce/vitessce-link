@@ -16,29 +16,33 @@ type Example = {
 	name: string;
 	description: string;
 	link: string;
+	paper: string;
 };
 
 const examples: Example[] = [
 	{
 		key: "clarence-1",
-		name: "Clarence et al., 2025 - 1",
+		name: "Yapp et al. - Oncology",
 		description:
 			"Large scale 3D CyCIF of thick tissue sections preserves intact cells, enabling accurate analysis of cell states, interactions, and spatially restricted signaling that thin sections miss.",
 		link: "https://vitessce.io/#?dataset=sorger-2024-4",
+		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4"
 	},
 	{
 		key: "clarence-2",
-		name: "Clarence et al., 2025 - 2",
+		name: "Yapp et al. - Oncology 2",
 		description:
 			"Detailed view of a blood vessel and cells in 3D CyCIF reveals intact cellular structures, interactions, and spatial organization within preserved tissue.",
 		link: "https://vitessce.io/#?dataset=sorger-2024-2",
+		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4"
 	},
 	{
 		key: "mclaughin-2025",
-		name: "McLaughlin et al. 2025",
+		name: "McLaughlin et al. Nephrology",
 		description:
 			"3D mapping of human nephrons reveals glomerular communities connected by extensive nerve networks, coordinating kidney function and changing with development and disease.",
 		link: "https://vitessce.io/#?dataset=jain-2024",
+		paper: "https://www.nature.com/articles/s41467-025-60435-8"
 	},
 ];
 
@@ -73,6 +77,9 @@ export const ExampleList = () => {
 						</a>
 						<p className={styles.demoGridItemDescription}>
 							{example.description}
+						</p>
+						<p className={styles.demoGridItemDescription}>
+							<a href={example.paper} target="_blank">Link to Paper</a>
 						</p>
 						{configAttrs[example.key]?.filter(Boolean).map((attrVal) => (
 							<span
