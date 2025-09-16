@@ -50,10 +50,12 @@ const config: Config = {
         src: 'logo-v.png',
       },
       items: [ 
-        { to: '/beta', label: 'Beta', position: 'left' },
+        { to: '/about', label: 'About', position: 'left' },
         { to: '/launch', label: 'Launch', position: 'left' },
         { to: '/examples', label: 'Examples', position: 'left' },
         { to: '/docs/guide', label: 'Docs', position: 'left' }, 
+        { to: '/beta', label: 'Beta', position: 'right' },
+
         {
           href: 'https://github.com/vitessce/vitessce-link/',
           label: 'GitHub',

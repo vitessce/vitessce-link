@@ -55,3 +55,7 @@ article p svg.custom-svg {
 .links {
   color: --ifm-color-primary
 }
+
+.removeTopPending {
+  padding-top: 0
+}
