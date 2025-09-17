@@ -1,8 +1,21 @@
 import Layout from "@theme/Layout";
 import { VITESSCE_SITE } from "../utils/constants";
-export default function Launch() {
+import {useColorMode} from '@docusaurus/theme-common';
+
+export default function About() {
+    return (
+      <Layout>
+        <AboutContent />
+      </Layout>
+    );
+  }
+
+function AboutContent() {
+    const {colorMode} = useColorMode();
+    const isDark = colorMode === 'dark';
+    const src  = isDark ? '/img/Tasks-dark.png'  : '/img/Tasks-light.png';
+
 	return (
-		<Layout>
 			<div className="aboutMainContainer">
 				<h2>
 					Vitessce Link is a mixed reality and 2D display hybrid approach for
@@ -35,7 +48,7 @@ export default function Launch() {
 				</div>
 
 				<div className="aboutSectionContainer">
-					<h3>How experts use Vitessce Link: </h3>
+					<h3>Vitessce Link in Action </h3>
 					<div className="aboutCaseStudyContainer">
 						<a
 							className="aboutCaseStudyCell"
@@ -75,23 +88,25 @@ export default function Launch() {
 					</div>
 				</div>
 
-				<div className="aboutSectionContainer">
-					<h3>Video of the Approach </h3>
-					<div className="aboutVideo">
-						<iframe
-							src="https://drive.google.com/file/d/1cRe9dQ2uNtHP2rbwu0jj92QbMVrwwFlT/preview"
-							allow="autoplay; fullscreen; picture-in-picture"
-							title="Video"
-						></iframe>
-					</div>
-				</div>
+                <div className="aboutSectionContainer">
+                    <h3>Video of the Approach</h3>
+                    <div className="aboutVideo">
+                        <iframe
+                        src="https://www.youtube-nocookie.com/embed/nTlybrJugCE?rel=0"
+                        title="Vitessce Link"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        loading="lazy"
+                        />
+                    </div>
+                </div>
 
 				<div className="aboutSectionContainer">
 					<h3>Your Analysis Journey, Reimagined</h3>
-					<h4>From Data to Discovery:</h4>
+					<h4>From Data to Discovery</h4>
 					<div className="aboutTasksImage">
 						{" "}
-						<img src="/img/Tasks.png" alt="Steps" />
+						<img src={src} alt="Steps" />
 					</div>
 
 					<p>
@@ -107,11 +122,9 @@ export default function Launch() {
 				<div className="aboutSectionContainer">
 					<h4 className="noBottomMargin">What do you need to get started?</h4>
 					<p className="italicFont">
-						Vitessce Link works seamlessly with Meta Quest 3, Meta Quest Pro,
-						and Meta Quest 3 SE.{" "}
+                    Compatible with both standard 2D displays and commercially available mixed reality headsets such as Meta Quest 3, Meta Quest Pro, Microsoft Hololens and others.
 					</p>
 				</div>
 			</div>
-		</Layout>
 	);
 }
