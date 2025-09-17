@@ -1,5 +1,4 @@
 import Layout from "@theme/Layout";
-// import { PageContent } from "../components/PageContent";
 import { VITESSCE_SITE } from "../utils/constants";
 export default function Launch() {
 	return (
@@ -10,11 +9,9 @@ export default function Launch() {
 					visual analysis of 3D tissue maps
 				</h2>
 				<div className="aboutTwoColSectionContainer">
-					<img
-						className="aboutTwoColSectionContainerImg"
-						src="/img/overview.png"
-						alt="Vitessce Link Overview"
-					/>
+					<div className="aboutTwoColSectionContainerImage">
+						<img src="/img/overview.png" alt="Vitessce Link Overview" />
+					</div>
 					<div className="aboutTwoColSectionContainerText">
 						<p>
 							Vitessce Link enables exploration of spatially resolved 3D tissue
@@ -38,8 +35,44 @@ export default function Launch() {
 				</div>
 
 				<div className="aboutSectionContainer">
-					<h3>Case Studies</h3>
-					<img src="/img/case-studies.png" alt="Case studies" />
+					<h3>How experts use Vitessce Link: </h3>
+					<div className="aboutCaseStudyContainer">
+						<a
+							className="aboutCaseStudyCell"
+							href="https://vitessce.io/#?dataset=jain-2024"
+							aria-label="Go to Case study One"
+							target="_blank"
+						>
+							<img src="/img/Case1.png" alt="Case-study One" loading="lazy" />
+						</a>
+
+						<a
+							className="aboutCaseStudyCell"
+							href="https://vitessce.io/#?dataset=sorger-2024-4"
+							aria-label="Go to Case study Two"
+							target="_blank"
+						>
+							<img src="/img/Case2.png" alt="Case-study Two" loading="lazy" />
+						</a>
+
+						<a
+							className="aboutCaseStudyCell"
+							href="https://vitessce.io/#?dataset=jain-2024"
+							aria-label="Go to Case study Three"
+							target="_blank"
+						>
+							<img src="/img/Case3.png" alt="Case-study Three" loading="lazy" />
+						</a>
+
+						<a
+							className="aboutCaseStudyCell"
+							href="https://vitessce.io/#?dataset=sorger-2024-2"
+							aria-label="Go to Case study Four"
+							target="_blank"
+						>
+							<img src="/img/Case4.png" alt="Case-study Four" loading="lazy" />
+						</a>
+					</div>
 				</div>
 
 				<div className="aboutSectionContainer">
@@ -54,15 +87,29 @@ export default function Launch() {
 				</div>
 
 				<div className="aboutSectionContainer">
-					<h4 className="noBottomMargin">
-						What do you need to use Vitessce Link?
-					</h4>
-					<p>Meta Quest 3, Meta Quest Pro, Meta Quest 3SE </p>
+					<h3>Your Analysis Journey, Reimagined</h3>
+					<h4>From Data to Discovery:</h4>
+					<div className="aboutTasksImage">
+						{" "}
+						<img src="/img/Tasks.png" alt="Steps" />
+					</div>
+
+					<p>
+						Our tool empowers domain experts to seamlessly move through the full
+						analysis journey: from exploring rich volumetric data, to assessing
+						segmentation quality, to uncovering correlations between derived and
+						imaging data, and ultimately creating new insights interactively.
+						Each step is designed to build on the last, turning complex data
+						into discoveries with ease.
+					</p>
 				</div>
 
 				<div className="aboutSectionContainer">
-					<h4>What you can do with it?</h4>
-					<img src="/img/steps.png" alt="Steps" />
+					<h4 className="noBottomMargin">What do you need to get started?</h4>
+					<p className="italicFont">
+						Vitessce Link works seamlessly with Meta Quest 3, Meta Quest Pro,
+						and Meta Quest 3 SE.{" "}
+					</p>
 				</div>
 			</div>
 		</Layout>
