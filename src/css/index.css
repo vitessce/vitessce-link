@@ -120,7 +120,7 @@ display: block;
   width: 100%;
 }
 
-.aboutSectionContainer h4 {
+.aboutSectionContainer h4, h3 {
   text-align: left;
 }
 

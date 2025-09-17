@@ -1,5 +1,5 @@
 import { Pinpad } from "../components/Pinpad";
-import Link from '@docusaurus/Link';
+import Link from "@docusaurus/Link";
 import Layout from "@theme/Layout";
 import "../css/index.css";
 export default function Home() {
@@ -8,7 +8,7 @@ export default function Home() {
 			<Pinpad />
 			<div className="homePageContainer">
 				<p>
-					For more information, please  <Link to="/about">click here</Link>
+					For more information, please <Link to="/about">click here</Link>
 				</p>
 			</div>
 		</Layout>

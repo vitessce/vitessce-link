@@ -6,9 +6,28 @@ import styles from "./ExampleList.module.css";
 type configAttrsType = Record<string, string[]>;
 
 const configAttrs: configAttrsType = {
-	"clarence-1": ["imaging", "spatial", "3D", "ome-tiff", "scalability", "multi-modal"],
-	"clarence-2": ["imaging", "spatial",  "ome-tiff", "scalability", "multi-modal"],
-	"mclaughin-2025": ["imaging", "spatial",  "ome-tiff", "scalability", "multi-modal"],
+	"clarence-1": [
+		"imaging",
+		"spatial",
+		"3D",
+		"ome-tiff",
+		"scalability",
+		"multi-modal",
+	],
+	"clarence-2": [
+		"imaging",
+		"spatial",
+		"ome-tiff",
+		"scalability",
+		"multi-modal",
+	],
+	"mclaughin-2025": [
+		"imaging",
+		"spatial",
+		"ome-tiff",
+		"scalability",
+		"multi-modal",
+	],
 };
 
 type Example = {
@@ -26,7 +45,7 @@ const examples: Example[] = [
 		description:
 			"Large scale 3D CyCIF of thick tissue sections preserves intact cells, enabling accurate analysis of cell states, interactions, and spatially restricted signaling that thin sections miss.",
 		link: "https://vitessce.io/#?dataset=sorger-2024-4",
-		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4"
+		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4",
 	},
 	{
 		key: "clarence-2",
@@ -34,7 +53,7 @@ const examples: Example[] = [
 		description:
 			"Detailed view of a blood vessel and cells in 3D CyCIF reveals intact cellular structures, interactions, and spatial organization within preserved tissue.",
 		link: "https://vitessce.io/#?dataset=sorger-2024-2",
-		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4"
+		paper: "https://www.biorxiv.org/content/10.1101/2023.11.10.566670v4",
 	},
 	{
 		key: "mclaughin-2025",
@@ -42,7 +61,7 @@ const examples: Example[] = [
 		description:
 			"3D mapping of human nephrons reveals glomerular communities connected by extensive nerve networks, coordinating kidney function and changing with development and disease.",
 		link: "https://vitessce.io/#?dataset=jain-2024",
-		paper: "https://www.nature.com/articles/s41467-025-60435-8"
+		paper: "https://www.nature.com/articles/s41467-025-60435-8",
 	},
 ];
 
@@ -79,7 +98,9 @@ export const ExampleList = () => {
 							{example.description}
 						</p>
 						<p className={styles.demoGridItemDescription}>
-							<a href={example.paper} target="_blank">Link to Paper</a>
+							<a href={example.paper} target="_blank">
+								Link to Paper
+							</a>
 						</p>
 						{configAttrs[example.key]?.filter(Boolean).map((attrVal) => (
 							<span
