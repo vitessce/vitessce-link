@@ -6,7 +6,7 @@ export default function Home() {
 	return (
 		<Layout>
 			<Pinpad />
-			<div className="betaDescriptionContainer removeTopPending">
+			<div className="homePageContainer">
 				<p>
 					For more information, please  <Link to="/about">click here</Link>
 				</p>
