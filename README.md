@@ -18,3 +18,8 @@ Project uses [biome](https://biomejs.dev/) for linting.
 ```
     pnpm build
 ```
+
+### Publishing using local branch
+``` 
+    pnpm build && pnpm dlx gh-pages -d build -b gh-pages -m "deploy from $(git rev-parse --abbrev-ref HEAD)"
+```
