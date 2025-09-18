@@ -33,6 +33,11 @@ body {
   --vit-error-bar-background: #f08080;
 }
 
+.themeImg--light { display: inline; }
+.themeImg--dark  { display: none; }
+[data-theme='dark'] .themeImg--light { display: none; }
+[data-theme='dark'] .themeImg--dark  { display: inline; }
+
 article p svg.custom-svg {
   display: inline-block;
 

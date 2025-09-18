@@ -1,21 +1,9 @@
 import Layout from "@theme/Layout";
 import { VITESSCE_SITE } from "../utils/constants";
-import { useColorMode } from "@docusaurus/theme-common";
 
 export default function About() {
 	return (
 		<Layout>
-			<AboutContent />
-		</Layout>
-	);
-}
-
-function AboutContent() {
-	const { colorMode } = useColorMode();
-	const isDark = colorMode === "dark";
-	const src = isDark ? "/img/Tasks-dark.png" : "/img/Tasks-light.png";
-
-	return (
 		<div className="aboutMainContainer">
 			<h2>
 				Vitessce Link is a mixed reality and 2D display hybrid approach for
@@ -103,8 +91,8 @@ function AboutContent() {
 				<h3>Your Analysis Journey, Reimagined</h3>
 				<h4>From Data to Discovery</h4>
 				<div className="aboutTasksImage">
-					{" "}
-					<img src={src} alt="Steps" />
+				<img className="themeImg--light" src="/img/Tasks-light.png" alt="Steps" />
+				<img className="themeImg--dark"  src="/img/Tasks-dark.png"  alt="Steps" />
 				</div>
 
 				<p>
@@ -126,5 +114,6 @@ function AboutContent() {
 				</p>
 			</div>
 		</div>
+		</Layout>
 	);
 }
