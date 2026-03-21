@@ -1,7 +1,7 @@
 import Layout from "@theme/Layout";
 import { VITESSCE_SITE } from "../utils/constants";
 
-const PAPER_DOI_URL = "https://www.nature.com/articles/s41592-024-02436-x";
+const PAPER_DOI_URL = "https://arxiv.org/abs/2511.04262";
 
 export default function About() {
 	return (
