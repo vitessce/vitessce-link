@@ -179,6 +179,88 @@ article p svg.custom-svg {
   box-shadow: 0 0 0 3px rgba(73, 165, 183, 0.25);
 }
 
+
+/* ================================================================
+   PUBLICATION SECTION — paper showcase
+   ================================================================ */
+
+   .publicationRow {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 2.5rem;
+    align-items: start;
+  }
+  
+  .publicationText {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .publicationAbstract {
+    font-size: 0.9rem;
+    color: var(--vit-text-secondary);
+    margin: 0 0 1.5rem;
+    line-height: 1.65;
+  }
+  
+  .publicationTitle {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--vit-text-primary);
+    margin: 0 0 0.75rem;
+    line-height: 1.4;
+    letter-spacing: -0.01em;
+  }
+  
+  .publicationAuthors {
+    font-size: 0.9rem;
+    color: var(--vit-text-secondary);
+    margin: 0 0 0.25rem;
+    line-height: 1.5;
+  }
+  
+  .publicationMeta {
+    font-size: 0.85rem;
+    color: var(--vit-text-muted);
+    margin: 0 0 0.75rem;
+    line-height: 1.5;
+  }
+  
+  .publicationMeta em {
+    font-style: italic;
+  }
+  
+  .publicationImageLink {
+    display: block;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+  }
+  
+  .publicationImageLink:hover {
+    transform: scale(1.02);
+  }
+  
+  .publicationImage {
+    width: 280px;
+    border-radius: var(--vit-radius-md);
+    box-shadow: var(--vit-shadow-lg);
+    border: 1px solid var(--vit-border-light);
+    display: block;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .publicationRow {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    .publicationImage {
+      width: 200px;
+    }
+  }
+  
+
+
 @media (max-width: 1024px) {
   .aboutCaseStudyContainer { grid-template-columns: repeat(2, 1fr); }
 }
