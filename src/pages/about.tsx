@@ -150,8 +150,8 @@ export default function About() {
 						</h3>
 						<p className="publicationAuthors">
 							Mörth, E., Turner, M.L., Nielsen, C., Liu, X.C., Keller, M., Choy,
-							L., Conroy, J., Kakar, T., Yapp, C., Wong, A. and Sorger, P, Liam
-							McLaughlin‖, L., Jain, S., Beyer, J., Pfister, H., Zhu-Tian, C.
+							L., Conroy, J., Kakar, T., Yapp, C., Wong, A., Sorger, P.,
+							McLaughlin, L., Jain, S., Beyer, J., Pfister, H., Zhu-Tian, C.
 							&amp; Gehlenborg, N.
 						</p>
 						<p className="publicationMeta">
