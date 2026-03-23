@@ -127,7 +127,7 @@ export default function About() {
 				</div>
 
 				<div className="aboutSectionContainer">
-					<h2> Read the Paper</h2>
+					<h2> Read the Preprint</h2>
 				</div>
 				<div className="publicationRow">
 					<a
@@ -181,7 +181,7 @@ export default function About() {
 							target="_blank"
 							rel="noopener noreferrer"
 						>
-							Read the Paper
+							Read the Preprint
 						</a>
 					</div>
 				</div>
